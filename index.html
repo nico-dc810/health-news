@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI News Radar | 大健康智媒体平台</title>
+    <link rel="stylesheet" href="styles.css?v=20260630-radar" />
+  </head>
+  <body>
+    <section id="loginView" class="login-view">
+      <div class="login-copy">
+        <p>Health Intelligence Radar</p>
+        <h1>大健康 AI 资讯雷达</h1>
+        <span>连接 IMA 知识库，把每日资讯整理成可检索、可判断、可继续交给智能体处理的行业信号。</span>
+      </div>
+      <form id="loginForm" class="login-card">
+        <strong>手机号登录</strong>
+        <label>
+          <span>手机号</span>
+          <input id="loginPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="请输入 11 位手机号" required />
+        </label>
+        <button type="submit">进入资讯雷达</button>
+        <small id="loginMessage">首版用于预览和内测，后续可接入正式权限、付款和企业账号。</small>
+      </form>
+    </section>
+
+    <main id="appShell" class="radar-shell is-hidden">
+      <header class="radar-hero">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span>
+          </div>
+          <div>
+            <p>AI INTELLIGENCE RADAR</p>
+            <h1>AI News Radar</h1>
+          </div>
+        </div>
+        <div class="status-stack">
+          <span>更新时间</span>
+          <strong id="updatedAt">06/30 08:03</strong>
+          <em id="sourceStatus">20/20 源正常</em>
+          <button type="button" id="agentButton">接入 Agent</button>
+        </div>
+      </header>
+
+      <section class="summary-strip" aria-label="过去 24 小时概览">
+        <strong>过去 24 小时：</strong>
+        <span>AI <b id="totalCount">679</b> 条</span>
+        <span>高优 <b id="priorityCount">84</b> 条</span>
+        <span>精选 <b id="selectedCount">20</b> 条</span>
+        <span>源 <b id="healthySourceCount">20/20正常</b></span>
+      </section>
+
+      <nav id="categoryTabs" class="category-tabs" aria-label="资讯分类"></nav>
+
+      <section class="radar-note">
+        <span id="radarSubtitle">过去 24 小时 · 679 条信号 · 84 条高优先级 · 140 个来源 · AI强相关</span>
+      </section>
+
+      <section class="search-row">
+        <input id="searchInput" type="search" placeholder="搜索 AI 信号 / 来源 / 标签" />
+        <span id="resultMeta">AI强相关 · 679 条</span>
+      </section>
+
+      <section class="filter-bar">
+        <button type="button" id="filterButton"><span>+</span> 高级筛选</button>
+        <span id="filterMeta">679 条结果 · 20/20 源正常</span>
+      </section>
+
+      <section class="signals-panel">
+        <div class="panel-head">
+          <div>
+            <p>TODAY'S SIGNALS</p>
+            <h2>今日重点信号</h2>
+          </div>
+          <div class="view-toggle" role="group" aria-label="切换视图">
+            <button type="button" class="is-active" data-view="hot">当前热点 <b>10</b></button>
+            <button type="button" data-view="timeline">时间线 <b>20</b></button>
+          </div>
+        </div>
+        <div id="signalGrid" class="signal-grid"></div>
+      </section>
+
+      <section class="timeline-panel">
+        <div class="panel-head compact">
+          <div>
+            <p>IMA KNOWLEDGE INTERFACE</p>
+            <h2>后续功能接口</h2>
+          </div>
+          <span>已预留，不影响首版上线</span>
+        </div>
+        <div id="interfaceGrid" class="interface-grid"></div>
+      </section>
+    </main>
+
+    <div id="agentDrawer" class="drawer" aria-hidden="true">
+      <button id="drawerBackdrop" class="drawer-backdrop" type="button" aria-label="关闭"></button>
+      <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+        <button id="drawerClose" class="drawer-close" type="button" aria-label="关闭">×</button>
+        <p>AGENT INTERFACES</p>
+        <h2 id="drawerTitle">已为后续功能留好接口</h2>
+        <div class="interface-list">
+          <article>
+            <strong>IMA 知识库同步</strong>
+            <span>GET /api/ima/signals · POST /api/ima/sync</span>
+          </article>
+          <article>
+            <strong>日报生成</strong>
+            <span>POST /api/radar/daily-report</span>
+          </article>
+          <article>
+            <strong>Agent 处理</strong>
+            <span>POST /api/agents/run</span>
+          </article>
+          <article>
+            <strong>登录权限</strong>
+            <span>POST /api/auth/phone-login</span>
+          </article>
+        </div>
+      </aside>
+    </div>
+
+    <script src="app.js?v=20260630-radar"></script>
+  </body>
+</html>
