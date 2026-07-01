@@ -468,7 +468,7 @@ button {
 
 .signal-card {
   display: grid;
-  grid-template-columns: 34px 106px minmax(0, 1fr) auto;
+  grid-template-columns: 34px 44px minmax(0, 1fr) auto;
   gap: 14px 16px;
   align-items: start;
   border: 0;
@@ -492,13 +492,22 @@ button {
 .brief-thumb {
   display: grid;
   place-items: center;
-  width: 106px;
-  height: 60px;
+  width: 44px;
+  height: 44px;
   border-radius: 6px;
   background: #d9e9e1;
   color: #111827;
-  font-size: 30px;
+  font-size: 18px;
   font-weight: 900;
+}
+
+.brief-thumb.has-image {
+  object-fit: cover;
+  background: #f1f5f9;
+}
+
+.brief-thumb.is-icon {
+  border: 1px solid #d9d5ca;
 }
 
 .tone-industry {
@@ -665,9 +674,29 @@ button {
 }
 
 .detail-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
   margin: 28px 0 12px;
   color: var(--muted);
   font-size: 14px;
+}
+
+.detail-breadcrumb button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--teal);
+  font: inherit;
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.detail-breadcrumb span,
+.detail-breadcrumb time {
+  color: var(--muted);
 }
 
 .detail-shell h1 {
@@ -698,9 +727,16 @@ button {
   place-items: center;
   height: clamp(160px, 28vw, 230px);
   border-radius: 8px;
+  overflow: hidden;
   color: rgba(7, 16, 28, 0.72);
   font-size: 78px;
   font-weight: 900;
+}
+
+.detail-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .detail-summary,
@@ -722,26 +758,43 @@ button {
 
 .structured-summary {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 .summary-point {
   display: grid;
-  grid-template-columns: 98px minmax(0, 1fr);
-  gap: 14px;
-  border-bottom: 1px solid #ece9e1;
-  padding-bottom: 12px;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 16px;
+  border: 1px solid #e7e2d8;
+  border-left: 4px solid #9bcbd0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: #fbfaf7;
 }
 
 .summary-point:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
+  border-bottom: 1px solid #e7e2d8;
 }
 
 .summary-point strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: var(--teal);
   font-size: 15px;
   line-height: 1.8;
+}
+
+.summary-point strong span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: #e8f6f7;
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 900;
 }
 
 .summary-point p,
@@ -1038,14 +1091,14 @@ button {
   }
 
   .signal-card {
-    grid-template-columns: 28px 72px minmax(0, 1fr);
+    grid-template-columns: 28px 38px minmax(0, 1fr);
     gap: 10px;
   }
 
   .brief-thumb {
-    width: 72px;
-    height: 48px;
-    font-size: 24px;
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
   }
 
   .brief-action {

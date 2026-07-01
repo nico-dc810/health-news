@@ -201,13 +201,33 @@ function bindDetailView() {
   });
 
   $("#detailClose").addEventListener("click", closeDetail);
+  $("#detailBreadcrumb").addEventListener("click", (event) => {
+    const target = event.target.closest("[data-detail-nav]");
+    if (!target) return;
+    if (target.dataset.detailNav === "brief") {
+      closeDetail();
+      return;
+    }
+    if (target.dataset.detailNav === "category") {
+      radarState.activeCategory = target.dataset.category || "hot";
+      renderCategories();
+      renderSignals();
+      closeDetail();
+    }
+  });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeDetail();
   });
 }
 
 function openDetail(item) {
-  $("#detailBreadcrumb").textContent = `每日简报 > ${categoryLabel(item.category)} > ${formatDate(item.publishedAt || item.updatedAt)}`;
+  $("#detailBreadcrumb").innerHTML = `
+    <button type="button" data-detail-nav="brief">每日简报</button>
+    <span>›</span>
+    <button type="button" data-detail-nav="category" data-category="${escapeHtml(item.category)}">${escapeHtml(categoryLabel(item.category))}</button>
+    <span>›</span>
+    <time>${escapeHtml(formatDate(item.publishedAt || item.updatedAt))}</time>
+  `;
   $("#detailTitle").textContent = item.title;
   $("#detailMeta").innerHTML = `
     <span>${escapeHtml(item.source)}</span>
@@ -216,7 +236,13 @@ function openDetail(item) {
     <span>${escapeHtml((item.tags || []).join(" / "))}</span>
   `;
   $("#detailHero").className = `detail-hero tone-${escapeHtml(item.category)}`;
-  $("#detailHero").textContent = categoryIcon(item.category);
+  if (item.imageUrl) {
+    $("#detailHero").innerHTML = `<img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" loading="lazy" />`;
+    $("#detailHero").classList.remove("is-hidden");
+  } else {
+    $("#detailHero").innerHTML = "";
+    $("#detailHero").classList.add("is-hidden");
+  }
   $("#detailSummary").innerHTML = renderStructuredSummary(item);
   $("#detailWhy").textContent = item.why;
   $("#detailMediaPotential").textContent = item.mediaPotential || inferMediaPotential(item);
@@ -287,6 +313,7 @@ function normalizeSignals(data) {
     mediaPotential: item.media_potential || item.mediaPotential || "",
     complianceNote: item.compliance_note || item.complianceNote || "",
     action: item.action || "",
+    imageUrl: normalizeUrl(item.image_url || item.imageUrl || item.cover || item.cover_url),
     why: item.why || item.reason || "已进入行业情报库，可继续交给 Agent 做摘要、选题或合规复核。",
     tags: item.tags || [],
     url: normalizeUrl(item.url || item.source_url),
@@ -297,9 +324,9 @@ function renderStructuredSummary(item) {
   const points = Array.isArray(item.keyPoints) && item.keyPoints.length ? item.keyPoints : buildSummaryPoints(item);
   return points
     .map(
-      (point) => `
+      (point, index) => `
         <article class="summary-point">
-          <strong>${escapeHtml(point.label)}</strong>
+          <strong><span>${String(index + 1).padStart(2, "0")}</span>${escapeHtml(point.label)}</strong>
           <p>${escapeHtml(point.text)}</p>
         </article>
       `,
@@ -414,7 +441,7 @@ function renderSignalCard(item) {
   return `
     <article class="signal-card">
       <span class="brief-rank">${String(item.rank).padStart(2, "0")}</span>
-      <div class="brief-thumb tone-${escapeHtml(item.category)}" aria-hidden="true">${categoryIcon(item.category)}</div>
+      ${renderBriefVisual(item)}
       <div class="brief-copy">
         <button type="button" class="brief-title" data-open-detail="${escapeHtml(item.id)}">${escapeHtml(item.title)}</button>
         <p>${escapeHtml(item.summary)}</p>
@@ -430,6 +457,13 @@ function renderSignalCard(item) {
       </div>
     </article>
   `;
+}
+
+function renderBriefVisual(item) {
+  if (item.imageUrl) {
+    return `<img class="brief-thumb has-image" src="${escapeHtml(item.imageUrl)}" alt="" loading="lazy" />`;
+  }
+  return `<div class="brief-thumb is-icon tone-${escapeHtml(item.category)}" aria-hidden="true">${categoryIcon(item.category)}</div>`;
 }
 
 function renderInterfaces() {
