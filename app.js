@@ -99,7 +99,7 @@ const fallbackSignals = [
 ];
 
 const interfaces = [
-  ["IMA 知识库数据源", "GET /api/ima/signals", "从 IMA 知识库读取资讯、笔记、网页收藏和标签。"],
+  ["行业资讯数据源", "GET /api/health/signals", "从行业来源读取政策、产业、产品、渠道和内容趋势。"],
   ["日报生成", "POST /api/radar/daily-report", "把今日重点信号整理成管理层日报、运营日报和选题清单。"],
   ["Agent 接入", "POST /api/agents/run", "保留给合规审核、选题生成、摘要改写、来源引用等能力。"],
   ["登录权限", "POST /api/auth/phone-login", "沿用手机号登录，后续可接企业账号、付款状态和权限组。"],
@@ -214,7 +214,7 @@ function renderCategories() {
 }
 
 async function loadSignals() {
-  const data = await tryApi("/api/ima/signals?limit=20");
+  const data = await tryApi("/api/health/signals?limit=20");
   radarState.signals = normalizeSignals(data) || fallbackSignals;
   updateStats();
 }
@@ -225,13 +225,13 @@ function normalizeSignals(data) {
   return list.map((item, index) => ({
     rank: item.rank || index + 1,
     category: item.category || "hot",
-    source: item.source || item.source_name || "IMA",
+    source: item.source || item.source_name || "行业资讯",
     sourceCount: item.source_count || 1,
     priority: item.priority || item.priority_level || "C",
     time: item.time || formatTime(item.published_at || item.updated_at),
     title: item.title || "未命名信号",
     summary: item.summary || item.excerpt || item.raw_text || "暂无摘要。",
-    why: item.why || item.reason || "已进入知识库，可继续交给 Agent 处理。",
+    why: item.why || item.reason || "已进入行业情报库，可继续交给 Agent 做摘要、选题或合规复核。",
     tags: item.tags || [],
     url: item.url || item.source_url || "#",
   }));
