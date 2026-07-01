@@ -532,6 +532,13 @@ button {
   text-decoration: none;
 }
 
+.source-unavailable {
+  width: fit-content;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 900;
+}
+
 .interface-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));

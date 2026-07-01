@@ -6,15 +6,12 @@ const radarState = {
 };
 
 const categories = [
-  { id: "hot", label: "热点", count: 679 },
-  { id: "model", label: "模型", count: 155 },
-  { id: "product", label: "产品", count: 164 },
-  { id: "developer", label: "开发者", count: 183 },
-  { id: "health", label: "HN热议", count: 92 },
-  { id: "industry", label: "行业", count: 245 },
-  { id: "research", label: "研究", count: 28 },
-  { id: "media", label: "自媒体", count: 31 },
-  { id: "community", label: "社区", count: 258 },
+  { id: "hot", label: "全部" },
+  { id: "industry", label: "直销行业" },
+  { id: "product", label: "产品监管" },
+  { id: "research", label: "合规研究" },
+  { id: "media", label: "媒体线索" },
+  { id: "community", label: "社媒观察" },
 ];
 
 const fallbackSignals = [
@@ -198,7 +195,7 @@ function renderCategories() {
     .map(
       (item) => `
         <button type="button" class="${item.id === radarState.activeCategory ? "is-active" : ""}" data-category="${item.id}">
-          ${item.label} <b>${item.count}</b>
+          ${item.label} <b>${categoryCount(item.id)}</b>
         </button>
       `,
     )
@@ -214,9 +211,16 @@ function renderCategories() {
 }
 
 async function loadSignals() {
-  const data = await tryApi("/api/health/signals?limit=20");
+  const data = (await tryApi("data/latest.json")) || (await tryApi("api/health/signals?limit=20"));
+  if (data?.source_health) {
+    radarState.sourceHealth = {
+      healthy: data.source_health.healthy || radarState.sourceHealth.healthy,
+      total: data.source_health.total || radarState.sourceHealth.total,
+    };
+  }
   radarState.signals = normalizeSignals(data) || fallbackSignals;
-  updateStats();
+  updateStats(data?.updated_at);
+  renderCategories();
 }
 
 function normalizeSignals(data) {
@@ -233,24 +237,29 @@ function normalizeSignals(data) {
     summary: item.summary || item.excerpt || item.raw_text || "暂无摘要。",
     why: item.why || item.reason || "已进入行业情报库，可继续交给 Agent 做摘要、选题或合规复核。",
     tags: item.tags || [],
-    url: item.url || item.source_url || "#",
+    url: normalizeUrl(item.url || item.source_url),
   }));
 }
 
-function updateStats() {
-  const total = categories.find((item) => item.id === "hot")?.count || radarState.signals.length;
+function updateStats(updatedAt) {
+  const total = radarState.signals.length;
   const selected = Math.min(20, radarState.signals.length || 20);
   $("#totalCount").textContent = String(total);
-  $("#priorityCount").textContent = "84";
+  $("#priorityCount").textContent = String(radarState.signals.filter((item) => item.priority === "A").length);
   $("#selectedCount").textContent = String(selected);
   $("#healthySourceCount").textContent = `${radarState.sourceHealth.healthy}/${radarState.sourceHealth.total}正常`;
   $("#sourceStatus").textContent = `${radarState.sourceHealth.healthy}/${radarState.sourceHealth.total} 源正常`;
-  $("#updatedAt").textContent = formatTime(new Date().toISOString());
+  $("#updatedAt").textContent = formatTime(updatedAt || new Date().toISOString());
+}
+
+function categoryCount(categoryId) {
+  if (categoryId === "hot") return radarState.signals.length || fallbackSignals.length;
+  return radarState.signals.filter((item) => item.category === categoryId).length;
 }
 
 function renderSignals() {
   const items = filteredSignals();
-  $("#resultMeta").textContent = `AI强相关 · ${items.length || 0} 条`;
+  $("#resultMeta").textContent = `行业信号 · ${items.length || 0} 条`;
   $("#filterMeta").textContent = `${items.length || 0} 条结果 · ${radarState.sourceHealth.healthy}/${radarState.sourceHealth.total} 源正常`;
   $("#signalGrid").innerHTML = items.length
     ? items.map(renderSignalCard).join("")
@@ -268,6 +277,9 @@ function filteredSignals() {
 
 function renderSignalCard(item) {
   const priorityClass = `priority-${String(item.priority || "c").toLowerCase()}`;
+  const sourceLink = item.url
+    ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">查看原文</a>`
+    : `<span class="source-unavailable">暂无原文链接</span>`;
   return `
     <article class="signal-card">
       <div class="signal-meta">
@@ -284,7 +296,7 @@ function renderSignalCard(item) {
         <p>${escapeHtml(item.why)}</p>
       </div>
       <div class="signal-tags">${(item.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
-      <a href="${escapeHtml(item.url)}" target="_blank" rel="noreferrer">查看原文</a>
+      ${sourceLink}
     </article>
   `;
 }
@@ -324,6 +336,14 @@ function formatTime(value) {
   const hour = String(date.getHours()).padStart(2, "0");
   const minute = String(date.getMinutes()).padStart(2, "0");
   return `${month}/${day} ${hour}:${minute}`;
+}
+
+function normalizeUrl(value) {
+  if (!value || value === "#") return "";
+  const url = String(value).trim();
+  if (/^https?:\/\//i.test(url)) return url;
+  if (/^[\w.-]+\.[a-z]{2,}(\/.*)?$/i.test(url)) return `https://${url}`;
+  return "";
 }
 
 function escapeHtml(value) {
