@@ -3,6 +3,7 @@ const radarState = {
   query: "",
   signals: [],
   sourceHealth: { healthy: 20, total: 20 },
+  updatedAt: "",
 };
 
 const categories = [
@@ -108,6 +109,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   bindLogin();
   bindSearch();
   bindDrawer();
+  bindDetailView();
   renderCategories();
   renderInterfaces();
   await loadSignals();
@@ -190,6 +192,45 @@ function closeDrawer() {
   $("#agentDrawer").setAttribute("aria-hidden", "true");
 }
 
+function bindDetailView() {
+  $("#signalGrid").addEventListener("click", (event) => {
+    const titleButton = event.target.closest("[data-open-detail]");
+    if (!titleButton) return;
+    const item = radarState.signals.find((signal) => signal.id === titleButton.dataset.openDetail);
+    if (item) openDetail(item);
+  });
+
+  $("#detailClose").addEventListener("click", closeDetail);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeDetail();
+  });
+}
+
+function openDetail(item) {
+  $("#detailBreadcrumb").textContent = `每日简报 > ${categoryLabel(item.category)} > ${formatDate(item.publishedAt || item.updatedAt)}`;
+  $("#detailTitle").textContent = item.title;
+  $("#detailMeta").innerHTML = `
+    <span>${escapeHtml(item.source)}</span>
+    <span>优先级 ${escapeHtml(item.priority)}</span>
+    <span>${escapeHtml(formatDate(item.publishedAt || item.updatedAt))}</span>
+    <span>${escapeHtml((item.tags || []).join(" / "))}</span>
+  `;
+  $("#detailHero").className = `detail-hero tone-${escapeHtml(item.category)}`;
+  $("#detailHero").textContent = categoryIcon(item.category);
+  $("#detailSummary").textContent = item.detail || item.summary;
+  $("#detailWhy").textContent = item.why;
+  $("#detailSource").href = item.url;
+  $("#detailSource").classList.toggle("is-hidden", !item.url);
+  $("#detailDrawer").classList.remove("is-hidden");
+  $("#detailDrawer").setAttribute("aria-hidden", "false");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function closeDetail() {
+  $("#detailDrawer").classList.add("is-hidden");
+  $("#detailDrawer").setAttribute("aria-hidden", "true");
+}
+
 function renderCategories() {
   $("#categoryTabs").innerHTML = categories
     .map(
@@ -212,6 +253,7 @@ function renderCategories() {
 
 async function loadSignals() {
   const data = (await tryApi("data/latest.json")) || (await tryApi("api/health/signals?limit=20"));
+  radarState.updatedAt = data?.updated_at || new Date().toISOString();
   if (data?.source_health) {
     radarState.sourceHealth = {
       healthy: data.source_health.healthy || radarState.sourceHealth.healthy,
@@ -227,14 +269,18 @@ function normalizeSignals(data) {
   const list = Array.isArray(data) ? data : data?.items || data?.signals;
   if (!Array.isArray(list) || !list.length) return null;
   return list.map((item, index) => ({
+    id: item.id || `signal-${index + 1}`,
     rank: item.rank || index + 1,
     category: item.category || "hot",
     source: item.source || item.source_name || "行业资讯",
     sourceCount: item.source_count || 1,
     priority: item.priority || item.priority_level || "C",
     time: item.time || formatTime(item.published_at || item.updated_at),
+    publishedAt: item.published_at || item.updated_at || data?.updated_at,
+    updatedAt: item.updated_at || data?.updated_at,
     title: item.title || "未命名信号",
     summary: item.summary || item.excerpt || item.raw_text || "暂无摘要。",
+    detail: item.detail || item.full_summary || item.summary || "暂无概要介绍。",
     why: item.why || item.reason || "已进入行业情报库，可继续交给 Agent 做摘要、选题或合规复核。",
     tags: item.tags || [],
     url: normalizeUrl(item.url || item.source_url),
@@ -250,6 +296,8 @@ function updateStats(updatedAt) {
   $("#healthySourceCount").textContent = `${radarState.sourceHealth.healthy}/${radarState.sourceHealth.total}正常`;
   $("#sourceStatus").textContent = `${radarState.sourceHealth.healthy}/${radarState.sourceHealth.total} 源正常`;
   $("#updatedAt").textContent = formatTime(updatedAt || new Date().toISOString());
+  $("#briefDate").textContent = formatDate(updatedAt || radarState.updatedAt);
+  $("#radarSubtitle").textContent = `每日简报 · ${formatDate(updatedAt || radarState.updatedAt)} · ${total} 条信号 · ${radarState.signals.filter((item) => item.priority === "A").length} 条高优先级`;
 }
 
 function categoryCount(categoryId) {
@@ -262,8 +310,35 @@ function renderSignals() {
   $("#resultMeta").textContent = `行业信号 · ${items.length || 0} 条`;
   $("#filterMeta").textContent = `${items.length || 0} 条结果 · ${radarState.sourceHealth.healthy}/${radarState.sourceHealth.total} 源正常`;
   $("#signalGrid").innerHTML = items.length
-    ? items.map(renderSignalCard).join("")
+    ? renderSignalGroups(items)
     : `<article class="signal-card"><h3>没有匹配的资讯</h3><p>换一个关键词，或切回热点分类。</p></article>`;
+}
+
+function renderSignalGroups(items) {
+  const groups = categories
+    .filter((category) => category.id !== "hot")
+    .map((category) => ({
+      ...category,
+      items: items.filter((item) => item.category === category.id),
+    }))
+    .filter((group) => group.items.length);
+
+  const ungrouped = items.filter((item) => !categories.some((category) => category.id === item.category));
+  if (ungrouped.length) groups.push({ id: "other", label: "其他信号", items: ungrouped });
+
+  return groups
+    .map(
+      (group) => `
+        <section class="brief-group">
+          <div class="brief-group-head">
+            <h3>${categoryIcon(group.id)} ${escapeHtml(group.label)}</h3>
+            <span>每日简报 · ${escapeHtml(formatDate(radarState.updatedAt))} · ${group.items.length} 条</span>
+          </div>
+          <div class="brief-list">${group.items.map(renderSignalCard).join("")}</div>
+        </section>
+      `,
+    )
+    .join("");
 }
 
 function filteredSignals() {
@@ -282,21 +357,21 @@ function renderSignalCard(item) {
     : `<span class="source-unavailable">暂无原文链接</span>`;
   return `
     <article class="signal-card">
-      <div class="signal-meta">
-        <span>#${escapeHtml(item.rank)}</span>
-        <small>${escapeHtml(item.source)}</small>
-        <small>${escapeHtml(item.sourceCount)} 个来源</small>
-        <em class="${priorityClass}">优先级 ${escapeHtml(item.priority)}</em>
-        <small>${escapeHtml(item.time)}</small>
+      <span class="brief-rank">${String(item.rank).padStart(2, "0")}</span>
+      <div class="brief-thumb tone-${escapeHtml(item.category)}" aria-hidden="true">${categoryIcon(item.category)}</div>
+      <div class="brief-copy">
+        <button type="button" class="brief-title" data-open-detail="${escapeHtml(item.id)}">${escapeHtml(item.title)}</button>
+        <p>${escapeHtml(item.summary)}</p>
+        <div class="signal-meta">
+          <em class="${priorityClass}">优先级 ${escapeHtml(item.priority)}</em>
+          <small>${escapeHtml(item.source)}</small>
+          <small>${escapeHtml(formatDate(item.publishedAt || item.updatedAt))}</small>
+          <small>${escapeHtml((item.tags || []).slice(0, 2).join(" / "))}</small>
+        </div>
       </div>
-      <h3>${escapeHtml(item.title)}</h3>
-      <p>${escapeHtml(item.summary)}</p>
-      <div class="why-box">
-        <strong>为什么重要</strong>
-        <p>${escapeHtml(item.why)}</p>
+      <div class="brief-action">
+        ${sourceLink}
       </div>
-      <div class="signal-tags">${(item.tags || []).map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
-      ${sourceLink}
     </article>
   `;
 }
@@ -336,6 +411,31 @@ function formatTime(value) {
   const hour = String(date.getHours()).padStart(2, "0");
   const minute = String(date.getMinutes()).padStart(2, "0");
   return `${month}/${day} ${hour}:${minute}`;
+}
+
+function formatDate(value) {
+  const date = value ? new Date(value) : new Date();
+  if (Number.isNaN(date.getTime())) return "2026/07/01";
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}/${month}/${day}`;
+}
+
+function categoryLabel(categoryId) {
+  return categories.find((category) => category.id === categoryId)?.label || "行业信号";
+}
+
+function categoryIcon(categoryId) {
+  const icons = {
+    industry: "▣",
+    product: "✚",
+    research: "§",
+    media: "◈",
+    community: "◎",
+    hot: "◆",
+  };
+  return icons[categoryId] || "◆";
 }
 
 function normalizeUrl(value) {
