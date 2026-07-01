@@ -217,8 +217,10 @@ function openDetail(item) {
   `;
   $("#detailHero").className = `detail-hero tone-${escapeHtml(item.category)}`;
   $("#detailHero").textContent = categoryIcon(item.category);
-  $("#detailSummary").textContent = item.detail || item.summary;
+  $("#detailSummary").innerHTML = renderStructuredSummary(item);
   $("#detailWhy").textContent = item.why;
+  $("#detailMediaPotential").textContent = item.mediaPotential || inferMediaPotential(item);
+  $("#detailCompliance").textContent = item.complianceNote || inferComplianceNote(item);
   $("#detailSource").href = item.url;
   $("#detailSource").classList.toggle("is-hidden", !item.url);
   $("#detailDrawer").classList.remove("is-hidden");
@@ -281,10 +283,64 @@ function normalizeSignals(data) {
     title: item.title || "未命名信号",
     summary: item.summary || item.excerpt || item.raw_text || "暂无摘要。",
     detail: item.detail || item.full_summary || item.summary || "暂无概要介绍。",
+    keyPoints: item.key_points || item.keyPoints || [],
+    mediaPotential: item.media_potential || item.mediaPotential || "",
+    complianceNote: item.compliance_note || item.complianceNote || "",
+    action: item.action || "",
     why: item.why || item.reason || "已进入行业情报库，可继续交给 Agent 做摘要、选题或合规复核。",
     tags: item.tags || [],
     url: normalizeUrl(item.url || item.source_url),
   }));
+}
+
+function renderStructuredSummary(item) {
+  const points = Array.isArray(item.keyPoints) && item.keyPoints.length ? item.keyPoints : buildSummaryPoints(item);
+  return points
+    .map(
+      (point) => `
+        <article class="summary-point">
+          <strong>${escapeHtml(point.label)}</strong>
+          <p>${escapeHtml(point.text)}</p>
+        </article>
+      `,
+    )
+    .join("");
+}
+
+function buildSummaryPoints(item) {
+  const sentences = splitChineseSentences(item.detail || item.summary);
+  const what = sentences.slice(0, 2).join("");
+  const trend = sentences.slice(2, 4).join("");
+  const impact = sentences.slice(4).join("");
+  const points = [
+    { label: "这是什么", text: what || item.summary },
+    { label: "行业信号", text: trend || item.why },
+    { label: "从业者启发", text: impact || item.why },
+  ];
+  if (item.action) points.push({ label: "建议动作", text: item.action });
+  return points.filter((point) => point.text);
+}
+
+function splitChineseSentences(text) {
+  return String(text || "")
+    .replace(/\s+/g, "")
+    .match(/[^。！？；]+[。！？；]?/g) || [];
+}
+
+function inferMediaPotential(item) {
+  const tagText = (item.tags || []).join("、");
+  if (item.category === "product") return `适合改写成“产品资质/销售合规/选购避坑”类内容，可结合 ${tagText || "监管信息"} 做清单式科普。`;
+  if (item.category === "research") return `适合改写成合规提醒或案例复盘，重点讲清边界，不建议做夸张标题。`;
+  if (item.category === "media") return `适合作为选题线索或海外观察，建议补充国内监管语境后再发布。`;
+  return `适合改写成行业观察或竞品案例，面向从业者解释趋势和可借鉴点。`;
+}
+
+function inferComplianceNote(item) {
+  const text = [item.title, item.summary, item.detail, item.why, ...(item.tags || [])].join(" ");
+  if (/保健食品|医疗器械|药监|功效|广告|合规|MLM|金字塔|直销/.test(text)) {
+    return "发布自媒体内容时应保留原始来源，避免扩大功效、暗示治疗效果、承诺收益或把个案经验包装成普遍结论。";
+  }
+  return "发布时应保留原文链接和时间，不把媒体观点直接写成事实结论。";
 }
 
 function updateStats(updatedAt) {
