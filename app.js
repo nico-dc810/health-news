@@ -11,6 +11,7 @@ const categories = [
   { id: "industry", label: "直销行业" },
   { id: "product", label: "产品监管" },
   { id: "research", label: "合规研究" },
+  { id: "consumer", label: "健康素材" },
   { id: "media", label: "媒体线索" },
   { id: "community", label: "社媒观察" },
 ];
@@ -521,6 +522,7 @@ function categoryIcon(categoryId) {
     industry: "▣",
     product: "✚",
     research: "§",
+    consumer: "●",
     media: "◈",
     community: "◎",
     hot: "◆",
