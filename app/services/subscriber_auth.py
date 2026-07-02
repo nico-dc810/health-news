@@ -14,28 +14,26 @@ from app.core.config import settings
 from app.models.subscriber_access import SubscriberAccess
 
 PHONE_PATTERN = re.compile(r"^1[3-9]\d{9}$")
-TOKEN_TTL_SECONDS = 86400 * 30  # 30 天
+TOKEN_TTL_SECONDS = 86400 * 30
 
 PAYMENT_CONFIG = {
     "wechat": {
         "provider": "wechat",
         "label": "微信支付",
-        "description": "请使用微信扫描二维码付款。付款后请联系管理员开通，或点击「我已付款」按钮自动检测。",
+        "description": "请使用微信扫描二维码付款。付款后请联系管理员开通，或点击“我已付款”按钮重新检测。",
         "qr_svg": "/demo/payment-wechat.png",
-        "amount": "¥199/年",
+        "amount": "199 元/年",
     },
     "alipay": {
         "provider": "alipay",
         "label": "支付宝",
-        "description": "请使用支付宝扫描二维码付款。付款后请联系管理员开通，或点击「我已付款」按钮自动检测。",
+        "description": "请使用支付宝扫描二维码付款。付款后请联系管理员开通，或点击“我已付款”按钮重新检测。",
         "qr_svg": "/demo/payment-alipay.png",
-        "amount": "¥199/年",
+        "amount": "199 元/年",
     },
     "customer_service": "付款后如需人工开通，请截屏付款记录联系平台管理员。",
 }
 
-
-# ── Token (HMAC-based session token, 零外部依赖) ──
 
 def _b64_encode(data: bytes) -> str:
     return urlsafe_b64encode(data).rstrip(b"=").decode()
@@ -49,7 +47,6 @@ def _b64_decode(data: str) -> bytes:
 
 
 def create_session_token(phone: str) -> str:
-    """签发带过期时间的 HMAC 签名 token"""
     payload = json.dumps({"phone": phone, "exp": int(time.time()) + TOKEN_TTL_SECONDS})
     payload_b64 = _b64_encode(payload.encode())
     sig = hmac.new(
@@ -61,7 +58,6 @@ def create_session_token(phone: str) -> str:
 
 
 def verify_session_token(token: str) -> dict | None:
-    """验证 token，返回 payload 或 None"""
     try:
         payload_b64, sig = token.rsplit(".", 1)
         expected = hmac.new(
@@ -79,7 +75,12 @@ def verify_session_token(token: str) -> dict | None:
         return None
 
 
-# ── 手机号校验 ──
+def require_admin_api_key(api_key: str | None) -> None:
+    if not settings.admin_api_key:
+        raise HTTPException(status_code=503, detail="管理员开通密钥尚未配置")
+    if not api_key or not hmac.compare_digest(api_key, settings.admin_api_key):
+        raise HTTPException(status_code=401, detail="管理员密钥无效")
+
 
 def normalize_phone(phone: str) -> str:
     return re.sub(r"\D", "", phone or "")
@@ -96,8 +97,6 @@ def password_hash_for_phone(phone: str) -> str:
     return hashlib.sha256(phone.encode("utf-8")).hexdigest()
 
 
-# ── 订阅者查询 ──
-
 def get_or_create_subscriber(db: Session, phone: str) -> SubscriberAccess:
     subscriber = db.scalar(select(SubscriberAccess).where(SubscriberAccess.phone == phone))
     if subscriber:
@@ -108,7 +107,7 @@ def get_or_create_subscriber(db: Session, phone: str) -> SubscriberAccess:
         password_hash=password_hash_for_phone(phone),
         payment_status="pending_payment",
         status="active",
-        remark="自助注册",
+        remark="自助登记",
     )
     db.add(subscriber)
     db.commit()
@@ -121,7 +120,6 @@ def get_subscriber_by_phone(db: Session, phone: str) -> SubscriberAccess | None:
 
 
 def _is_paid_active(subscriber: SubscriberAccess) -> bool:
-    """判断是否已付款且在有效期内"""
     if subscriber.status != "active":
         return False
     if subscriber.payment_status != "paid":
@@ -148,23 +146,18 @@ def _subscriber_to_read(subscriber: SubscriberAccess) -> dict:
     }
 
 
-# ── check-phone：两阶段登录核心 ──
-
 def check_phone(db: Session, phone: str) -> dict:
-    """检查手机号状态，返回是否允许进入 + 支付信息"""
     normalized = validate_phone(phone)
     subscriber = get_subscriber_by_phone(db, normalized)
 
-    # 未注册 → 返回支付页引导注册
     if subscriber is None:
         return {
             "allowed": False,
             "reason": "new_user",
-            "message": "该手机号尚未开通会员，请先扫码付款，再点击「我已付款」按钮进行检测。",
+            "message": "该手机号尚未开通会员，请先扫码付款，再点击“我已付款”按钮进行检测。",
             "payment": PAYMENT_CONFIG,
         }
 
-    # 已拉黑/禁用
     if subscriber.status == "blocked":
         return {
             "allowed": False,
@@ -173,7 +166,6 @@ def check_phone(db: Session, phone: str) -> dict:
             "payment": None,
         }
 
-    # 已付款且在有效期内 → 签发 token
     if _is_paid_active(subscriber):
         token = create_session_token(normalized)
         subscriber.last_login_at = datetime.now(timezone.utc)
@@ -187,7 +179,6 @@ def check_phone(db: Session, phone: str) -> dict:
             "payment": None,
         }
 
-    # 未付款或已过期 → 返回支付信息
     reason = "expired" if subscriber.payment_status == "paid" else "unpaid"
     return {
         "allowed": False,
@@ -197,10 +188,7 @@ def check_phone(db: Session, phone: str) -> dict:
     }
 
 
-# ── verify-token：token 续期验证 ──
-
 def verify_token(token: str, db: Session) -> dict:
-    """验证已有 token，如果有效则续期"""
     payload = verify_session_token(token)
     if payload is None:
         return {"ok": False, "reason": "invalid_token", "message": "登录已过期，请重新输入手机号。"}
@@ -210,7 +198,6 @@ def verify_token(token: str, db: Session) -> dict:
     if subscriber is None or not _is_paid_active(subscriber):
         return {"ok": False, "reason": "access_revoked", "message": "账号权限已变更，请重新验证。"}
 
-    # 签发新 token（续期）
     new_token = create_session_token(phone)
     return {
         "ok": True,
@@ -221,16 +208,12 @@ def verify_token(token: str, db: Session) -> dict:
     }
 
 
-# ── me：获取当前用户信息 ──
-
 def get_me(db: Session, phone: str) -> dict:
     subscriber = get_subscriber_by_phone(db, phone)
     if subscriber is None:
         raise HTTPException(status_code=404, detail="用户不存在")
     return _subscriber_to_read(subscriber)
 
-
-# ── login_with_phone：向后兼容原有 phone-login ──
 
 def login_with_phone(db: Session, phone: str) -> dict:
     normalized = validate_phone(phone)
@@ -270,21 +253,18 @@ def login_with_phone(db: Session, phone: str) -> dict:
     }
 
 
-# ── demo_activate：演示开通 ──
-
 def demo_activate_subscriber(db: Session, phone: str, expires_days: int = 365) -> dict:
-    """手动开通会员（管理员用）"""
     normalized = validate_phone(phone)
     subscriber = get_or_create_subscriber(db, normalized)
     now = datetime.now(timezone.utc)
     subscriber.payment_status = "paid"
     subscriber.status = "active"
     subscriber.activated_at = subscriber.activated_at or now
-    subscriber.expires_at = subscriber.expires_at or datetime.fromtimestamp(
+    subscriber.expires_at = datetime.fromtimestamp(
         now.timestamp() + 86400 * expires_days, tz=timezone.utc
     )
     subscriber.last_login_at = now
-    subscriber.remark = subscriber.remark or "演示开通"
+    subscriber.remark = subscriber.remark or "管理员手动开通"
     db.commit()
     db.refresh(subscriber)
     token = create_session_token(normalized)

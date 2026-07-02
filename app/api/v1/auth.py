@@ -20,6 +20,7 @@ from app.services.subscriber_auth import (
     demo_activate_subscriber,
     get_me,
     login_with_phone,
+    require_admin_api_key,
     verify_session_token,
     verify_token,
 )
@@ -35,7 +36,12 @@ def phone_login(payload: PhoneLoginRequest, db: Session = Depends(get_db)) -> di
 
 
 @router.post("/demo-activate", response_model=DemoActivateResponse)
-def demo_activate(payload: PhoneLoginRequest, db: Session = Depends(get_db)) -> dict:
+def demo_activate(
+    payload: PhoneLoginRequest,
+    db: Session = Depends(get_db),
+    x_admin_api_key: str | None = Header(None),
+) -> dict:
+    require_admin_api_key(x_admin_api_key)
     return demo_activate_subscriber(db, payload.phone)
 
 

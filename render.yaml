@@ -14,7 +14,7 @@ services:
           name: health-media-db
           property: connectionString
       - key: INTELLIGENCE_AUTO_CRAWL_ENABLED
-        value: true
+        value: false
       - key: INTELLIGENCE_AUTO_CRAWL_WORKSPACE_ID
         value: demo-workspace
       - key: INTELLIGENCE_AUTO_CRAWL_INTERVAL_HOURS
@@ -22,6 +22,8 @@ services:
       - key: INTELLIGENCE_AUTO_CRAWL_MAX_SOURCES
         value: 10
       - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_API_KEY
         generateValue: true
       - key: CORS_ORIGINS
         value: https://nico-dc810.github.io,https://health-radar.pages.dev

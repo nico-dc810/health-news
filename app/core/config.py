@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    app_name: str = "大健康内容增长大脑"
+    app_name: str = "大健康智媒体平台"
     app_env: str = "development"
     api_prefix: str = "/api"
     database_url: str = "sqlite:///./health_media.db"
@@ -19,6 +19,7 @@ class Settings(BaseSettings):
     minio_secret_key: str = "minioadmin"
     minio_bucket: str = "health-media"
     secret_key: str = "change-me-in-production-use-env-var"
+    admin_api_key: str = ""
     cors_origins: str = "https://nico-dc810.github.io,http://localhost:8000,http://127.0.0.1:8000"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
