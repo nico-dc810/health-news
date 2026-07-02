@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 
 from app.db.session import get_db
 from app.schemas.auth import (
+    AdminActivateRequest,
+    AdminActivateResponse,
     CheckPhoneRequest,
     CheckPhoneResponse,
     DemoActivateResponse,
@@ -15,6 +17,7 @@ from app.schemas.auth import (
 )
 from app.services.subscriber_auth import (
     PAYMENT_CONFIG,
+    activate_subscriber,
     check_phone,
     create_session_token,
     demo_activate_subscriber,
@@ -43,6 +46,21 @@ def demo_activate(
 ) -> dict:
     require_admin_api_key(x_admin_api_key)
     return demo_activate_subscriber(db, payload.phone)
+
+
+@router.post("/admin/activate", response_model=AdminActivateResponse)
+def admin_activate(
+    payload: AdminActivateRequest,
+    db: Session = Depends(get_db),
+    x_admin_api_key: str | None = Header(None),
+) -> dict:
+    require_admin_api_key(x_admin_api_key)
+    return activate_subscriber(
+        db,
+        payload.phone,
+        expires_days=payload.expires_days,
+        remark=payload.remark,
+    )
 
 
 @router.get("/payment-config", response_model=PaymentConfigRead)

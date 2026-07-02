@@ -253,8 +253,17 @@ def login_with_phone(db: Session, phone: str) -> dict:
     }
 
 
-def demo_activate_subscriber(db: Session, phone: str, expires_days: int = 365) -> dict:
+def activate_subscriber(
+    db: Session,
+    phone: str,
+    *,
+    expires_days: int = 365,
+    remark: str | None = None,
+) -> dict:
     normalized = validate_phone(phone)
+    if expires_days <= 0:
+        raise HTTPException(status_code=422, detail="开通天数必须大于 0")
+
     subscriber = get_or_create_subscriber(db, normalized)
     now = datetime.now(timezone.utc)
     subscriber.payment_status = "paid"
@@ -264,7 +273,7 @@ def demo_activate_subscriber(db: Session, phone: str, expires_days: int = 365) -
         now.timestamp() + 86400 * expires_days, tz=timezone.utc
     )
     subscriber.last_login_at = now
-    subscriber.remark = subscriber.remark or "管理员手动开通"
+    subscriber.remark = remark or subscriber.remark or "管理员手动开通"
     db.commit()
     db.refresh(subscriber)
     token = create_session_token(normalized)
@@ -274,3 +283,7 @@ def demo_activate_subscriber(db: Session, phone: str, expires_days: int = 365) -
         "token": token,
         "user": _subscriber_to_read(subscriber),
     }
+
+
+def demo_activate_subscriber(db: Session, phone: str, expires_days: int = 365) -> dict:
+    return activate_subscriber(db, phone, expires_days=expires_days)

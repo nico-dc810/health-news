@@ -1,9 +1,5 @@
-from datetime import datetime
-
 from pydantic import BaseModel
 
-
-# ── 请求 ──
 
 class PhoneLoginRequest(BaseModel):
     phone: str
@@ -17,7 +13,11 @@ class VerifyTokenRequest(BaseModel):
     token: str
 
 
-# ── 支付 ──
+class AdminActivateRequest(BaseModel):
+    phone: str
+    expires_days: int = 365
+    remark: str | None = None
+
 
 class PaymentProviderRead(BaseModel):
     provider: str
@@ -33,8 +33,6 @@ class PaymentConfigRead(BaseModel):
     customer_service: str
 
 
-# ── 用户 ──
-
 class SubscriberAccessRead(BaseModel):
     id: str
     phone: str
@@ -44,8 +42,6 @@ class SubscriberAccessRead(BaseModel):
     expires_at: str | None = None
     last_login_at: str | None = None
 
-
-# ── 响应 ──
 
 class PhoneLoginResponse(BaseModel):
     ok: bool
@@ -84,6 +80,13 @@ class MeResponse(BaseModel):
 
 
 class DemoActivateResponse(BaseModel):
+    ok: bool
+    message: str
+    token: str | None = None
+    user: SubscriberAccessRead
+
+
+class AdminActivateResponse(BaseModel):
     ok: bool
     message: str
     token: str | None = None

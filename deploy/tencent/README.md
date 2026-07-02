@@ -49,10 +49,10 @@ curl https://你的域名/api/auth/payment-config
 用户付款后，使用管理员密钥开通：
 
 ```bash
-curl -X POST https://你的域名/api/auth/demo-activate \
+curl -X POST https://你的域名/api/auth/admin/activate \
   -H "Content-Type: application/json" \
   -H "X-Admin-Api-Key: 你的_ADMIN_API_KEY" \
-  -d '{"phone":"13800138000"}'
+  -d '{"phone":"13800138000","expires_days":365,"remark":"微信付款开通"}'
 ```
 
 开通后用户在网页输入手机号即可进入平台。
@@ -71,4 +71,3 @@ docker compose up -d --build
 ```bash
 docker compose exec postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" > backup.sql
 ```
-
