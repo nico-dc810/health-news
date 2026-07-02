@@ -4,26 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>大健康 AI 资讯雷达 | 大健康智媒体平台</title>
-    <link rel="stylesheet" href="styles.css?v=20260701-health1" />
+    <link rel="stylesheet" href="styles.css?v=20260702-auth2" />
   </head>
   <body>
+    <!-- ═══ 登录视图 ═══ -->
     <section id="loginView" class="login-view">
       <div class="login-copy">
         <p>Health Intelligence Radar</p>
         <h1>大健康 AI 资讯雷达</h1>
         <span>为大健康从业者筛选政策、产业、产品和内容趋势，沉淀成可检索、可判断、可行动的行业情报。</span>
       </div>
-      <form id="loginForm" class="login-card">
-        <strong>手机号登录</strong>
-        <label>
-          <span>手机号</span>
-          <input id="loginPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="请输入 11 位手机号" required />
-        </label>
-        <button type="submit">进入资讯雷达</button>
-        <small id="loginMessage">首版用于预览和内测，后续可接入正式权限、付款和企业账号。</small>
-      </form>
+      <div class="login-card" id="loginCard">
+        <!-- 阶段 1：输入手机号 -->
+        <div id="phoneStep">
+          <strong>手机号登录</strong>
+          <label>
+            <span>手机号</span>
+            <input id="loginPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="请输入 11 位手机号" />
+          </label>
+          <button type="button" id="loginSubmit">进入资讯雷达</button>
+          <small id="loginMessage" class="is-hidden"></small>
+        </div>
+
+        <!-- 阶段 2：付款（check-phone 返回 unpaid 时展开） -->
+        <div id="paymentStep" class="is-hidden">
+          <button type="button" id="paymentBack" class="payment-back">&larr; 返回</button>
+          <strong>开通会员</strong>
+          <p id="paymentPhoneHint"></p>
+
+          <div class="payment-tabs">
+            <button type="button" class="is-active" data-pay="wechat">微信支付</button>
+            <button type="button" data-pay="alipay">支付宝</button>
+          </div>
+
+          <div id="paymentQrWechat" class="payment-qr">
+            <span class="payment-amount">199 元 / 年</span>
+            <img src="payment-wechat.png" alt="微信支付二维码" width="200" height="200" />
+            <small>请使用微信扫一扫付款</small>
+          </div>
+          <div id="paymentQrAlipay" class="payment-qr is-hidden">
+            <span class="payment-amount">199 元 / 年</span>
+            <img src="payment-alipay.png" alt="支付宝付款二维码" width="200" height="200" />
+            <small>请使用支付宝扫一扫付款</small>
+          </div>
+
+          <button type="button" id="paymentCheckButton" class="payment-retry">我已付款，重新检测</button>
+          <small id="paymentMessage" class="payment-message is-hidden"></small>
+          <small class="payment-note">付款后请联系管理员开通权限，或点击上方按钮自动检测。如需帮助请截屏付款记录联系客服。</small>
+        </div>
+
+        <!-- 阶段 3：被禁用 -->
+        <div id="blockedStep" class="is-hidden">
+          <strong>无法登录</strong>
+          <p id="blockedMessage"></p>
+          <button type="button" class="payment-back" onclick="location.reload()">&larr; 重新输入</button>
+        </div>
+      </div>
     </section>
 
+    <!-- ═══ 主应用 ═══ -->
     <main id="appShell" class="radar-shell is-hidden">
       <header class="radar-hero">
         <div class="brand-lockup">
@@ -40,12 +79,13 @@
           <strong id="updatedAt">06/30 08:03</strong>
           <em id="sourceStatus">20/20 源正常</em>
           <button type="button" id="agentButton">接入 Agent</button>
+          <button type="button" id="logoutButton" class="logout-btn" title="退出登录">退出</button>
         </div>
       </header>
 
-      <section class="summary-strip" aria-label="过去 24 小时概览">
-        <strong>过去 24 小时：</strong>
-        <span>AI <b id="totalCount">679</b> 条</span>
+      <section class="summary-strip" aria-label="每日简报概览">
+        <strong>每日简报：</strong>
+        <span>信号 <b id="totalCount">0</b> 条</span>
         <span>高优 <b id="priorityCount">84</b> 条</span>
         <span>精选 <b id="selectedCount">20</b> 条</span>
         <span>源 <b id="healthySourceCount">20/20正常</b></span>
@@ -54,12 +94,12 @@
       <nav id="categoryTabs" class="category-tabs" aria-label="资讯分类"></nav>
 
       <section class="radar-note">
-        <span id="radarSubtitle">过去 24 小时 · 679 条信号 · 84 条高优先级 · 140 个来源 · AI强相关</span>
+        <span id="radarSubtitle">每日简报 · 大健康直销行业信号 · 按可信度和可追溯性排序</span>
       </section>
 
       <section class="search-row">
-        <input id="searchInput" type="search" placeholder="搜索 AI 信号 / 来源 / 标签" />
-        <span id="resultMeta">AI强相关 · 679 条</span>
+        <input id="searchInput" type="search" placeholder="搜索标题 / 来源 / 标签" />
+        <span id="resultMeta">行业信号 · 0 条</span>
       </section>
 
       <section class="filter-bar">
@@ -70,8 +110,9 @@
       <section class="signals-panel">
         <div class="panel-head">
           <div>
-            <p>TODAY'S SIGNALS</p>
-            <h2>今日重点信号</h2>
+            <p>DAILY BRIEF</p>
+            <h2>每日简报</h2>
+            <span id="briefDate">2026/07/01</span>
           </div>
           <div class="view-toggle" role="group" aria-label="切换视图">
             <button type="button" class="is-active" data-view="hot">当前热点 <b>10</b></button>
@@ -93,6 +134,7 @@
       </section>
     </main>
 
+    <!-- ═══ Agent 抽屉 ═══ -->
     <div id="agentDrawer" class="drawer" aria-hidden="true">
       <button id="drawerBackdrop" class="drawer-backdrop" type="button" aria-label="关闭"></button>
       <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
@@ -114,12 +156,42 @@
           </article>
           <article>
             <strong>登录权限</strong>
-            <span>POST /api/auth/phone-login</span>
+            <span>POST /api/auth/check-phone · POST /api/auth/verify-token</span>
           </article>
         </div>
       </aside>
     </div>
 
-    <script src="app.js?v=20260701-health1"></script>
+    <!-- ═══ 详情视图 ═══ -->
+    <div id="detailDrawer" class="detail-view is-hidden" aria-hidden="true">
+      <div class="detail-shell">
+        <button id="detailClose" class="detail-back" type="button">返回简报</button>
+        <nav id="detailBreadcrumb" class="detail-breadcrumb" aria-label="详情导航">每日简报</nav>
+        <h1 id="detailTitle"></h1>
+        <div id="detailMeta" class="detail-meta"></div>
+        <div id="detailHero" class="detail-hero" aria-hidden="true"></div>
+        <section class="detail-summary">
+          <span>概要介绍</span>
+          <div id="detailSummary" class="structured-summary"></div>
+        </section>
+        <section class="detail-section">
+          <h2>为什么重要</h2>
+          <p id="detailWhy"></p>
+        </section>
+        <section class="detail-section detail-grid">
+          <article>
+            <h2>自媒体角度</h2>
+            <p id="detailMediaPotential"></p>
+          </article>
+          <article>
+            <h2>合规提醒</h2>
+            <p id="detailCompliance"></p>
+          </article>
+        </section>
+        <a id="detailSource" class="detail-source" href="#" target="_blank" rel="noreferrer">查看原文</a>
+      </div>
+    </div>
+
+    <script src="app.js?v=20260702-auth2"></script>
   </body>
 </html>

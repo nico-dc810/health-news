@@ -1,0 +1,63 @@
+### 1. Create organization
+POST http://localhost:8000/api/organizations
+Content-Type: application/json
+
+{
+  "workspace_id": "demo-workspace",
+  "name": "示例中医调理馆",
+  "industry_type": "中医养生",
+  "city": "杭州",
+  "description": "一家专注睡眠、疲劳、体重管理的中医调理门店。",
+  "target_audience": "35-50岁关注睡眠、疲劳和体重管理的女性",
+  "core_services": "体质评估、睡眠调理、亚健康管理、体重管理",
+  "compliance_notes": "避免承诺疗效，避免疾病治疗暗示。",
+  "forbidden_words": "治愈,根治,保证,永久,7天见效,彻底改善"
+}
+
+### 2. Create material
+POST http://localhost:8000/api/organizations/{{organization_id}}/materials
+Content-Type: application/json
+
+{
+  "workspace_id": "demo-workspace",
+  "organization_id": "{{organization_id}}",
+  "title": "产后睡眠和疲劳客户案例",
+  "material_type": "客户案例",
+  "source_type": "manual",
+  "raw_text": "一位产后宝妈经常觉得累，晚上睡不好，白天没精神。她最担心的不是体重，而是怕身体状态越来越差。沟通后我们建议她先记录一周睡眠、饮食和情绪变化，再做基础评估。"
+}
+
+### 3. Analyze material
+POST http://localhost:8000/api/materials/{{material_id}}/analyze
+
+### 4. Generate topics
+POST http://localhost:8000/api/organizations/{{organization_id}}/topics/generate
+Content-Type: application/json
+
+{
+  "organization_id": "{{organization_id}}",
+  "platform": "小红书",
+  "conversion_goal": "引导咨询",
+  "count": 5
+}
+
+### 5. Generate content task
+POST http://localhost:8000/api/content-tasks/generate
+Content-Type: application/json
+
+{
+  "organization_id": "{{organization_id}}",
+  "topic_id": "{{topic_id}}",
+  "content_type": "xiaohongshu",
+  "platform": "小红书"
+}
+
+### 6. Compliance review only
+POST http://localhost:8000/api/compliance/review
+Content-Type: application/json
+
+{
+  "organization_id": "{{organization_id}}",
+  "input_text": "这个方法可以保证7天见效，彻底改善睡眠问题。"
+}
+

@@ -1,0 +1,20 @@
+### 1. Create knowledge source
+POST http://localhost:8000/api/knowledge-sources
+Content-Type: application/json
+
+{
+  "workspace_id": "demo-workspace",
+  "name": "本地示例健康资讯",
+  "source_type": "website",
+  "url": "http://127.0.0.1:8000/demo/sample_health_news.html",
+  "crawl_frequency": "daily",
+  "category": "睡眠健康",
+  "credibility_level": "medium"
+}
+
+### 2. Crawl knowledge source
+POST http://localhost:8000/api/knowledge-sources/{{source_id}}/crawl
+
+### 3. List knowledge items
+GET http://localhost:8000/api/knowledge-items?source_id={{source_id}}
+

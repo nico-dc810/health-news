@@ -1,0 +1,42 @@
+### 1. Create mock model config
+POST http://localhost:8000/api/model-configs
+Content-Type: application/json
+
+{
+  "workspace_id": "demo-workspace",
+  "organization_id": null,
+  "name": "默认 Mock 模型",
+  "provider": "mock",
+  "api_base_url": null,
+  "api_key": null,
+  "model_name": "mock-model",
+  "use_case": "default",
+  "temperature": 0.7,
+  "max_tokens": 1200,
+  "is_default": true
+}
+
+### 2. Test model config
+POST http://localhost:8000/api/model-configs/{{config_id}}/test
+
+### 3. List model configs
+GET http://localhost:8000/api/model-configs?workspace_id=demo-workspace
+
+### 4. Create OpenAI-compatible model config example
+POST http://localhost:8000/api/model-configs
+Content-Type: application/json
+
+{
+  "workspace_id": "demo-workspace",
+  "organization_id": null,
+  "name": "自定义 OpenAI 兼容模型",
+  "provider": "openai_compatible",
+  "api_base_url": "https://api.openai.com/v1",
+  "api_key": "replace-with-your-api-key",
+  "model_name": "gpt-4.1-mini",
+  "use_case": "content_producer",
+  "temperature": 0.7,
+  "max_tokens": 1200,
+  "is_default": false
+}
+
