@@ -318,7 +318,7 @@ button {
 
 .search-row {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr minmax(180px, 220px) auto;
   gap: 14px;
   align-items: center;
   padding: 0;
@@ -326,10 +326,36 @@ button {
   border: 0;
 }
 
-.search-row input {
+.search-row input,
+.date-picker select {
   min-height: 54px;
   padding: 0 16px;
   font-size: 16px;
+}
+
+.date-picker {
+  display: grid;
+  gap: 6px;
+}
+
+.date-picker span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.date-picker select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  outline: 0;
+}
+
+.date-picker select:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(8, 119, 124, 0.12);
 }
 
 .search-row span {
@@ -767,12 +793,11 @@ button {
 
 .summary-point {
   display: grid;
-  grid-template-columns: 128px minmax(0, 1fr);
-  gap: 16px;
+  gap: 10px;
   border: 1px solid #e7e2d8;
   border-left: 4px solid #9bcbd0;
   border-radius: 8px;
-  padding: 14px 16px;
+  padding: 16px 18px;
   background: #fbfaf7;
 }
 
@@ -785,7 +810,7 @@ button {
   align-items: center;
   gap: 8px;
   color: var(--teal);
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.8;
 }
 
@@ -806,7 +831,7 @@ button {
   margin: 0;
   color: #1f2937;
   font-size: 16px;
-  line-height: 1.82;
+  line-height: 1.9;
 }
 
 .detail-section h2 {

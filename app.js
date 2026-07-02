@@ -4,6 +4,8 @@ const radarState = {
   signals: [],
   sourceHealth: { healthy: 20, total: 20 },
   updatedAt: "",
+  activeDate: "",
+  availableBriefs: [],
 };
 
 const categories = [
@@ -109,6 +111,7 @@ const $ = (selector) => document.querySelector(selector);
 document.addEventListener("DOMContentLoaded", async () => {
   bindLogin();
   bindSearch();
+  bindDateSelector();
   bindDrawer();
   bindDetailView();
   renderCategories();
@@ -170,6 +173,16 @@ function bindSearch() {
       button.classList.add("is-active");
       renderSignals();
     });
+  });
+}
+
+function bindDateSelector() {
+  $("#briefDateSelect").addEventListener("change", async (event) => {
+    const date = event.target.value;
+    if (!date || date === radarState.activeDate) return;
+    radarState.activeDate = date;
+    await loadSignals(date);
+    renderSignals();
   });
 }
 
@@ -280,8 +293,14 @@ function renderCategories() {
   });
 }
 
-async function loadSignals() {
-  const data = (await tryApi("data/latest.json")) || (await tryApi("api/health/signals?limit=20"));
+async function loadSignals(date) {
+  if (!radarState.availableBriefs.length) {
+    await loadBriefIndex();
+  }
+  const selectedDate = date || radarState.activeDate || radarState.availableBriefs[0]?.date || "";
+  const dailyPath = selectedDate ? `data/daily/${selectedDate}.json` : "";
+  const data = (dailyPath ? await tryApi(dailyPath) : null) || (await tryApi("data/latest.json")) || (await tryApi("api/health/signals?limit=20"));
+  radarState.activeDate = data?.date || selectedDate || formatDateForFile(data?.updated_at || new Date().toISOString());
   radarState.updatedAt = data?.updated_at || new Date().toISOString();
   if (data?.source_health) {
     radarState.sourceHealth = {
@@ -292,6 +311,15 @@ async function loadSignals() {
   radarState.signals = normalizeSignals(data) || fallbackSignals;
   updateStats(data?.updated_at);
   renderCategories();
+  renderBriefDateOptions();
+}
+
+async function loadBriefIndex() {
+  const index = await tryApi("data/daily/index.json");
+  const list = Array.isArray(index?.items) ? index.items : [];
+  radarState.availableBriefs = list.length
+    ? list
+    : [{ date: formatDateForFile(new Date().toISOString()), label: formatDate(new Date().toISOString()), path: "data/latest.json" }];
 }
 
 function normalizeSignals(data) {
@@ -380,8 +408,18 @@ function updateStats(updatedAt) {
   $("#healthySourceCount").textContent = `${radarState.sourceHealth.healthy}/${radarState.sourceHealth.total}正常`;
   $("#sourceStatus").textContent = `${radarState.sourceHealth.healthy}/${radarState.sourceHealth.total} 源正常`;
   $("#updatedAt").textContent = formatTime(updatedAt || new Date().toISOString());
-  $("#briefDate").textContent = formatDate(updatedAt || radarState.updatedAt);
-  $("#radarSubtitle").textContent = `每日简报 · ${formatDate(updatedAt || radarState.updatedAt)} · ${total} 条信号 · ${radarState.signals.filter((item) => item.priority === "A").length} 条高优先级`;
+  const displayDate = formatDateFromFile(radarState.activeDate) || formatDate(updatedAt || radarState.updatedAt);
+  $("#briefDate").textContent = displayDate;
+  $("#radarSubtitle").textContent = `每日简报 · ${displayDate} · ${total} 条信号 · ${radarState.signals.filter((item) => item.priority === "A").length} 条高优先级`;
+}
+
+function renderBriefDateOptions() {
+  const options = radarState.availableBriefs.length
+    ? radarState.availableBriefs
+    : [{ date: radarState.activeDate, label: formatDateFromFile(radarState.activeDate) }];
+  $("#briefDateSelect").innerHTML = options
+    .map((item) => `<option value="${escapeHtml(item.date)}" ${item.date === radarState.activeDate ? "selected" : ""}>${escapeHtml(item.label || formatDateFromFile(item.date))}</option>`)
+    .join("");
 }
 
 function categoryCount(categoryId) {
@@ -511,6 +549,22 @@ function formatDate(value) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}/${month}/${day}`;
+}
+
+function formatDateForFile(value) {
+  const date = value ? new Date(value) : new Date();
+  if (Number.isNaN(date.getTime())) return "";
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function formatDateFromFile(value) {
+  if (!value) return "";
+  const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return "";
+  return `${match[1]}/${match[2]}/${match[3]}`;
 }
 
 function categoryLabel(categoryId) {
