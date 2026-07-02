@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>大健康 AI 资讯雷达 | 大健康智媒体平台</title>
-    <link rel="stylesheet" href="styles.css?v=20260701-brief5" />
+    <link rel="stylesheet" href="styles.css?v=20260702-calendar1" />
   </head>
   <body>
     <section id="loginView" class="login-view">
@@ -51,6 +51,27 @@
         <span>源 <b id="healthySourceCount">20/20正常</b></span>
       </section>
 
+      <div class="brief-workspace">
+        <aside class="archive-navigator" aria-label="每日简报归档">
+          <input id="archiveSearchInput" type="search" placeholder="搜索内容..." />
+          <div class="calendar-card">
+            <div class="calendar-head">
+              <button id="calendarPrev" type="button" aria-label="上个月">‹</button>
+              <strong id="calendarMonthLabel">2026 年 7 月</strong>
+              <button id="calendarNext" type="button" aria-label="下个月">›</button>
+            </div>
+            <div class="calendar-weekdays" aria-hidden="true">
+              <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+            </div>
+            <div id="calendarGrid" class="calendar-grid"></div>
+          </div>
+          <div class="month-briefs">
+            <h2>本月各期</h2>
+            <div id="monthBriefList"></div>
+          </div>
+        </aside>
+
+        <div class="brief-content">
       <nav id="categoryTabs" class="category-tabs" aria-label="资讯分类"></nav>
 
       <section class="radar-note">
@@ -59,10 +80,6 @@
 
       <section class="search-row">
         <input id="searchInput" type="search" placeholder="搜索标题 / 来源 / 标签" />
-        <label class="date-picker">
-          <span>简报日期</span>
-          <select id="briefDateSelect" aria-label="选择简报日期"></select>
-        </label>
         <span id="resultMeta">行业信号 · 0 条</span>
       </section>
 
@@ -96,6 +113,8 @@
         </div>
         <div id="interfaceGrid" class="interface-grid"></div>
       </section>
+        </div>
+      </div>
     </main>
 
     <div id="agentDrawer" class="drawer" aria-hidden="true">
@@ -154,6 +173,6 @@
       </div>
     </div>
 
-    <script src="app.js?v=20260701-brief5"></script>
+    <script src="app.js?v=20260702-calendar1"></script>
   </body>
 </html>

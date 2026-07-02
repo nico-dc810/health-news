@@ -6,6 +6,8 @@ const radarState = {
   updatedAt: "",
   activeDate: "",
   availableBriefs: [],
+  calendarYear: null,
+  calendarMonth: null,
 };
 
 const categories = [
@@ -111,7 +113,7 @@ const $ = (selector) => document.querySelector(selector);
 document.addEventListener("DOMContentLoaded", async () => {
   bindLogin();
   bindSearch();
-  bindDateSelector();
+  bindArchiveNavigator();
   bindDrawer();
   bindDetailView();
   renderCategories();
@@ -164,6 +166,8 @@ function setLoginMessage(message, isError) {
 function bindSearch() {
   $("#searchInput").addEventListener("input", (event) => {
     radarState.query = event.target.value.trim().toLowerCase();
+    const archiveSearch = $("#archiveSearchInput");
+    if (archiveSearch && archiveSearch.value !== event.target.value) archiveSearch.value = event.target.value;
     renderSignals();
   });
 
@@ -176,13 +180,28 @@ function bindSearch() {
   });
 }
 
-function bindDateSelector() {
-  $("#briefDateSelect").addEventListener("change", async (event) => {
-    const date = event.target.value;
-    if (!date || date === radarState.activeDate) return;
-    radarState.activeDate = date;
-    await loadSignals(date);
-    renderSignals();
+function bindArchiveNavigator() {
+  const archiveSearch = $("#archiveSearchInput");
+  if (archiveSearch) {
+    archiveSearch.addEventListener("input", (event) => {
+      radarState.query = event.target.value.trim().toLowerCase();
+      const mainSearch = $("#searchInput");
+      if (mainSearch && mainSearch.value !== event.target.value) mainSearch.value = event.target.value;
+      renderSignals();
+    });
+  }
+
+  $("#calendarPrev")?.addEventListener("click", () => shiftCalendarMonth(-1));
+  $("#calendarNext")?.addEventListener("click", () => shiftCalendarMonth(1));
+  $("#calendarGrid")?.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-calendar-date]");
+    if (!button || button.disabled) return;
+    await switchBriefDate(button.dataset.calendarDate);
+  });
+  $("#monthBriefList")?.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-brief-date]");
+    if (!button) return;
+    await switchBriefDate(button.dataset.briefDate);
   });
 }
 
@@ -309,9 +328,10 @@ async function loadSignals(date) {
     };
   }
   radarState.signals = normalizeSignals(data) || fallbackSignals;
+  setCalendarMonthFromDate(radarState.activeDate);
   updateStats(data?.updated_at);
   renderCategories();
-  renderBriefDateOptions();
+  renderArchiveNavigator();
 }
 
 async function loadBriefIndex() {
@@ -320,6 +340,7 @@ async function loadBriefIndex() {
   radarState.availableBriefs = list.length
     ? list
     : [{ date: formatDateForFile(new Date().toISOString()), label: formatDate(new Date().toISOString()), path: "data/latest.json" }];
+  setCalendarMonthFromDate(radarState.availableBriefs[0]?.date);
 }
 
 function normalizeSignals(data) {
@@ -413,13 +434,86 @@ function updateStats(updatedAt) {
   $("#radarSubtitle").textContent = `每日简报 · ${displayDate} · ${total} 条信号 · ${radarState.signals.filter((item) => item.priority === "A").length} 条高优先级`;
 }
 
-function renderBriefDateOptions() {
-  const options = radarState.availableBriefs.length
-    ? radarState.availableBriefs
-    : [{ date: radarState.activeDate, label: formatDateFromFile(radarState.activeDate) }];
-  $("#briefDateSelect").innerHTML = options
-    .map((item) => `<option value="${escapeHtml(item.date)}" ${item.date === radarState.activeDate ? "selected" : ""}>${escapeHtml(item.label || formatDateFromFile(item.date))}</option>`)
-    .join("");
+function renderArchiveNavigator() {
+  renderCalendar();
+  renderMonthBriefList();
+}
+
+function renderCalendar() {
+  const grid = $("#calendarGrid");
+  if (!grid) return;
+  const year = radarState.calendarYear || new Date().getFullYear();
+  const month = Number.isInteger(radarState.calendarMonth) ? radarState.calendarMonth : new Date().getMonth();
+  const available = new Set(radarState.availableBriefs.map((item) => item.date));
+  const cells = [];
+  for (let index = 0; index < firstDayOffsetMonday(year, month); index += 1) {
+    cells.push('<span class="calendar-empty" aria-hidden="true"></span>');
+  }
+  for (let day = 1; day <= daysInMonth(year, month); day += 1) {
+    const date = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    const hasBrief = available.has(date);
+    const active = date === radarState.activeDate;
+    cells.push(`
+      <button
+        type="button"
+        class="calendar-day ${hasBrief ? "has-brief" : ""} ${active ? "is-active" : ""}"
+        data-calendar-date="${escapeHtml(date)}"
+        ${hasBrief ? "" : "disabled"}
+        aria-label="${escapeHtml(formatChineseShortDate(date))}${hasBrief ? " brief" : ""}"
+      >${day}</button>
+    `);
+  }
+  $("#calendarMonthLabel").textContent = `${year} 年 ${month + 1} 月`;
+  grid.innerHTML = cells.join("");
+}
+
+function renderMonthBriefList() {
+  const list = $("#monthBriefList");
+  if (!list) return;
+  const year = radarState.calendarYear || new Date().getFullYear();
+  const month = Number.isInteger(radarState.calendarMonth) ? radarState.calendarMonth : new Date().getMonth();
+  const monthKey = `${year}-${String(month + 1).padStart(2, "0")}`;
+  const items = radarState.availableBriefs
+    .filter((item) => String(item.date || "").startsWith(monthKey))
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+
+  list.innerHTML = items.length
+    ? items
+        .map(
+          (item) => `
+            <button type="button" class="month-brief-item ${item.date === radarState.activeDate ? "is-active" : ""}" data-brief-date="${escapeHtml(item.date)}">
+              <strong>${escapeHtml(item.title || item.label || "大健康简报")}</strong>
+              <span>${escapeHtml(formatChineseShortDate(item.date))} · ${Number(item.count || item.total || 20)} 篇文章</span>
+            </button>
+          `,
+        )
+        .join("")
+    : '<p class="month-empty">本月暂无已上线简报</p>';
+}
+
+async function switchBriefDate(date) {
+  if (!date || date === radarState.activeDate) return;
+  radarState.activeDate = date;
+  setCalendarMonthFromDate(date, true);
+  await loadSignals(date);
+  renderSignals();
+}
+
+function setCalendarMonthFromDate(dateString, force = false) {
+  if (!dateString || (!force && radarState.calendarYear !== null)) return;
+  const match = String(dateString).match(/^(\d{4})-(\d{2})-\d{2}$/);
+  if (!match) return;
+  radarState.calendarYear = Number(match[1]);
+  radarState.calendarMonth = Number(match[2]) - 1;
+}
+
+function shiftCalendarMonth(delta) {
+  const year = radarState.calendarYear || new Date().getFullYear();
+  const month = Number.isInteger(radarState.calendarMonth) ? radarState.calendarMonth : new Date().getMonth();
+  const date = new Date(year, month + delta, 1);
+  radarState.calendarYear = date.getFullYear();
+  radarState.calendarMonth = date.getMonth();
+  renderArchiveNavigator();
 }
 
 function categoryCount(categoryId) {
@@ -565,6 +659,20 @@ function formatDateFromFile(value) {
   const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
   if (!match) return "";
   return `${match[1]}/${match[2]}/${match[3]}`;
+}
+
+function formatChineseShortDate(value) {
+  const match = String(value || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return "";
+  return `${Number(match[2])} 月 ${Number(match[3])} 日`;
+}
+
+function daysInMonth(year, month) {
+  return new Date(year, month + 1, 0).getDate();
+}
+
+function firstDayOffsetMonday(year, month) {
+  return (new Date(year, month, 1).getDay() + 6) % 7;
 }
 
 function categoryLabel(categoryId) {

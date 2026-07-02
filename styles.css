@@ -236,6 +236,7 @@ button {
 }
 
 .summary-strip,
+.archive-navigator,
 .category-tabs,
 .search-row,
 .filter-bar,
@@ -265,11 +266,170 @@ button {
   font-size: 24px;
 }
 
+.brief-workspace {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  margin-top: 22px;
+}
+
+.brief-content {
+  min-width: 0;
+}
+
+.archive-navigator {
+  position: sticky;
+  top: 18px;
+  display: grid;
+  gap: 22px;
+  padding: 16px;
+}
+
+.archive-navigator input {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 14px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 15px;
+  outline: 0;
+}
+
+.archive-navigator input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(8, 119, 124, 0.12);
+}
+
+.calendar-card {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+}
+
+.calendar-head {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.calendar-head strong {
+  font-size: 19px;
+}
+
+.calendar-head button {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #66717f;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.calendar-head button:hover {
+  background: #eef8f3;
+  color: var(--teal);
+}
+
+.calendar-weekdays,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.calendar-weekdays span {
+  color: #657080;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.calendar-empty,
+.calendar-day {
+  min-height: 38px;
+}
+
+.calendar-day {
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #b6bdc7;
+  font-size: 15px;
+  font-weight: 760;
+}
+
+.calendar-day.has-brief {
+  background: #fff6d6;
+  color: var(--ink);
+}
+
+.calendar-day.is-active {
+  background: #ffc400;
+  color: #111827;
+}
+
+.calendar-day:disabled {
+  cursor: default;
+}
+
+.month-briefs {
+  display: grid;
+  gap: 10px;
+}
+
+.month-briefs h2 {
+  margin: 0;
+  color: #66717f;
+  font-size: 15px;
+}
+
+#monthBriefList {
+  display: grid;
+  gap: 8px;
+}
+
+.month-brief-item {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 12px;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+}
+
+.month-brief-item:hover,
+.month-brief-item.is-active {
+  background: #fff4cc;
+}
+
+.month-brief-item strong {
+  font-size: 16px;
+}
+
+.month-brief-item span,
+.month-empty {
+  margin: 0;
+  color: #66717f;
+  font-size: 13px;
+}
+
 .category-tabs {
   display: flex;
   flex-wrap: nowrap;
   gap: 10px;
-  margin-top: 26px;
+  margin-top: 0;
   overflow-x: auto;
   padding: 6px;
   -webkit-overflow-scrolling: touch;
@@ -318,7 +478,7 @@ button {
 
 .search-row {
   display: grid;
-  grid-template-columns: 1fr minmax(180px, 220px) auto;
+  grid-template-columns: 1fr auto;
   gap: 14px;
   align-items: center;
   padding: 0;
@@ -997,6 +1157,14 @@ button {
   .radar-hero {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+
+  .brief-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-navigator {
+    position: static;
   }
 
   .status-stack {
