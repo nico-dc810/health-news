@@ -368,13 +368,14 @@ button {
 }
 
 .calendar-day.has-brief {
-  background: #fff6d6;
+  background: #e8f4ee;
   color: var(--ink);
 }
 
 .calendar-day.is-active {
-  background: #ffc400;
-  color: #111827;
+  background: var(--teal);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(8, 119, 124, 0.18);
 }
 
 .calendar-day:disabled {
@@ -401,9 +402,9 @@ button {
   display: grid;
   gap: 6px;
   width: 100%;
-  border: 0;
+  border: 1px solid transparent;
   border-radius: 8px;
-  padding: 11px 12px;
+  padding: 10px 11px;
   background: transparent;
   color: var(--ink);
   text-align: left;
@@ -411,7 +412,12 @@ button {
 
 .month-brief-item:hover,
 .month-brief-item.is-active {
-  background: #fff4cc;
+  background: #e8f4ee;
+}
+
+.month-brief-item.is-active {
+  border-color: #b9d8d6;
+  color: var(--teal-dark);
 }
 
 .month-brief-item strong {
