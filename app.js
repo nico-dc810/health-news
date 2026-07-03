@@ -371,7 +371,7 @@ function normalizeSignals(data) {
 }
 
 function renderStructuredSummary(item) {
-  const points = Array.isArray(item.keyPoints) && item.keyPoints.length ? item.keyPoints : buildSummaryPoints(item);
+  const points = buildReaderDigest(item);
   return points
     .map(
       (point, index) => `
@@ -382,6 +382,49 @@ function renderStructuredSummary(item) {
       `,
     )
     .join("");
+}
+
+function buildReaderDigest(item) {
+  const keyPoints = Array.isArray(item.keyPoints) ? item.keyPoints : [];
+  const usefulPoints = keyPoints.filter((point) => point?.text && !isGenericSummaryText(point.text));
+  const sourceLine = item.source ? `${item.source} 这篇内容` : "这篇内容";
+  const detailText = cleanText(item.detail || item.summary);
+  const summaryText = cleanText(item.summary);
+  const whyText = cleanText(item.why);
+  const mediaText = cleanText(item.mediaPotential || inferMediaPotential(item));
+  const complianceText = cleanText(item.complianceNote || inferComplianceNote(item));
+  const tagText = (item.tags || []).slice(0, 4).join("、");
+
+  const what = [
+    `${sourceLine}主要讲的是：${summaryText || item.title}。`,
+    detailText && detailText !== summaryText ? detailText : "",
+    usefulPoints[0]?.text && usefulPoints[0].text !== summaryText ? usefulPoints[0].text : "",
+  ]
+    .filter(Boolean)
+    .join("");
+
+  const logic = [
+    whyText ? `它重要的原因在于：${whyText}` : "",
+    usefulPoints[1]?.text && usefulPoints[1].text !== whyText ? usefulPoints[1].text : "",
+    tagText ? `从标签看，核心关联点是 ${tagText}。` : "",
+  ]
+    .filter(Boolean)
+    .join("");
+
+  const judgment = [
+    mediaText ? `如果你是内容创作者或从业者，可以把它转化为：${mediaText}` : "",
+    complianceText ? `阅读和转述时要注意：${complianceText}` : "",
+    usefulPoints[2]?.text && usefulPoints[2].text !== mediaText ? usefulPoints[2].text : "",
+    item.url ? "如果你需要核对原始事实、引用具体数据或判断适用范围，建议继续点开原文。" : "",
+  ]
+    .filter(Boolean)
+    .join("");
+
+  return [
+    { label: "文章在讲什么", text: trimDigest(what || summaryText || item.title) },
+    { label: "逻辑、因果和结论", text: trimDigest(logic || whyText || detailText) },
+    { label: "读者如何判断价值", text: trimDigest(judgment || mediaText || complianceText) },
+  ].filter((point) => point.text);
 }
 
 function buildSummaryPoints(item) {
@@ -396,6 +439,29 @@ function buildSummaryPoints(item) {
   ];
   if (item.action) points.push({ label: "建议动作", text: item.action });
   return points.filter((point) => point.text);
+}
+
+function isGenericSummaryText(text) {
+  return /事实基础清楚|判断价值不在于标题热度|从业者可把它改写成案例拆解|避免功效夸大/.test(String(text || ""));
+}
+
+function cleanText(text) {
+  return String(text || "").replace(/\s+/g, " ").trim();
+}
+
+function trimDigest(text) {
+  const clean = cleanText(text);
+  if (clean.length <= 420) return clean;
+  const sentences = splitChineseSentences(clean);
+  const selected = [];
+  let length = 0;
+  for (const sentence of sentences) {
+    if (length + sentence.length > 420 && selected.length >= 2) break;
+    selected.push(sentence);
+    length += sentence.length;
+  }
+  const result = selected.join("");
+  return result || `${clean.slice(0, 418)}…`;
 }
 
 function splitChineseSentences(text) {
