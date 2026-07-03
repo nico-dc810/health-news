@@ -1,21 +1,29 @@
-﻿{
-    "updated_at":  "2026-07-02T09:30:00+08:00",
-    "items":  [
-                  {
-                      "date":  "2026-07-02",
-                      "label":  "2026/07/02",
-                      "title":  "2026/07/02",
-                      "path":  "data/daily/2026-07-02.json",
-                      "count":  20,
-                      "summary":  "FTC、DSN、NutraIngredients、CDC、WHO、MedlinePlus 每日简报"
-                  },
-                  {
-                      "date":  "2026-07-01",
-                      "label":  "2026/07/01",
-                      "title":  "2026/07/01",
-                      "path":  "data/daily/2026-07-01.json",
-                      "count":  15,
-                      "summary":  "直销行业、产品监管与消费者健康素材归档"
-                  }
-              ]
+{
+  "updated_at": "2026-07-03T09:30:00+08:00",
+  "items": [
+    {
+      "date": "2026-07-03",
+      "label": "2026/07/03",
+      "title": "2026/07/03",
+      "path": "data/daily/2026-07-03.json",
+      "count": 20,
+      "summary": "NMPA、FDA、DSN、Harvard、CDC、Mayo 每日简报"
+    },
+    {
+      "date": "2026-07-02",
+      "label": "2026/07/02",
+      "title": "2026/07/02",
+      "path": "data/daily/2026-07-02.json",
+      "count": 20,
+      "summary": "FTC、DSN、NutraIngredients、CDC、WHO、MedlinePlus 每日简报"
+    },
+    {
+      "date": "2026-07-01",
+      "label": "2026/07/01",
+      "title": "2026/07/01",
+      "path": "data/daily/2026-07-01.json",
+      "count": 15,
+      "summary": "直销行业、产品监管与消费者健康素材归档"
+    }
+  ]
 }
