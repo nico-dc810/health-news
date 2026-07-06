@@ -1,12 +1,12 @@
 {
-  "updated_at": "2026-07-06T10:45:00+08:00",
+  "updated_at": "2026-07-05T18:30:00+08:00",
   "source_health": {
     "healthy": 20,
     "total": 20
   },
   "items": [
     {
-      "id": "20260706-001",
+      "id": "20260705-001",
       "rank": 1,
       "category": "policy",
       "source": "国家市场监督管理总局",
@@ -60,7 +60,7 @@
       "url": "https://www.samr.gov.cn/xw/zj/art/2026/art_77a0992ed23544f5bd3ef6f7868b1d15.html"
     },
     {
-      "id": "20260706-002",
+      "id": "20260705-002",
       "rank": 2,
       "category": "policy",
       "source": "国家市场监督管理总局",
@@ -114,7 +114,7 @@
       "url": "https://www.samr.gov.cn/xw/zj/art/2026/art_47c5fca7faca4e23a0b248a6d227d8b3.html"
     },
     {
-      "id": "20260706-003",
+      "id": "20260705-003",
       "rank": 3,
       "category": "policy",
       "source": "FDA",
@@ -168,7 +168,7 @@
       "url": "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts"
     },
     {
-      "id": "20260706-004",
+      "id": "20260705-004",
       "rank": 4,
       "category": "product",
       "source": "FDA",
@@ -222,7 +222,7 @@
       "url": "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/kao-usa-voluntarily-recalls-some-lots-oribe-serene-scalp-densifying-shampoo"
     },
     {
-      "id": "20260706-005",
+      "id": "20260705-005",
       "rank": 5,
       "category": "product",
       "source": "FDA",
@@ -276,7 +276,7 @@
       "url": "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/jfe-franchising-inc-dba-snowfoxr-and-fusia-asian-inspirationsr-voluntarily-recalls-fusia-asian"
     },
     {
-      "id": "20260706-006",
+      "id": "20260705-006",
       "rank": 6,
       "category": "product",
       "source": "FDA",
@@ -330,7 +330,7 @@
       "url": "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/la-colonia-cheese-recalls-queso-fresco-and-queso-dura-viejo-because-possible-health-risk"
     },
     {
-      "id": "20260706-007",
+      "id": "20260705-007",
       "rank": 7,
       "category": "product",
       "source": "FDA",
@@ -384,7 +384,7 @@
       "url": "https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts/total-nutrition-expands-voluntary-recall-tnvitamins-organic-moringa-capsules-and-powder-products"
     },
     {
-      "id": "20260706-008",
+      "id": "20260705-008",
       "rank": 8,
       "category": "industry",
       "source": "Direct Selling News",
@@ -438,7 +438,7 @@
       "url": "https://www.directsellingnews.com/2026/07/02/asea-announces-more-than-50-million-redox-cell-signaling-supplement-bottles-sold/"
     },
     {
-      "id": "20260706-009",
+      "id": "20260705-009",
       "rank": 9,
       "category": "industry",
       "source": "Direct Selling News",
@@ -492,7 +492,7 @@
       "url": "https://www.directsellingnews.com/2026/07/03/herbalife-unveils-halftime-refueling-at-riyadh-season-boxing-match/"
     },
     {
-      "id": "20260706-010",
+      "id": "20260705-010",
       "rank": 10,
       "category": "industry",
       "source": "Direct Selling News",
@@ -546,7 +546,7 @@
       "url": "https://www.directsellingnews.com/2026/07/02/coway-honored-at-2026-international-design-excellence-awards/"
     },
     {
-      "id": "20260706-011",
+      "id": "20260705-011",
       "rank": 11,
       "category": "industry",
       "source": "Direct Selling News",
@@ -600,7 +600,7 @@
       "url": "https://www.directsellingnews.com/2026/07/02/pm-international-earns-innovation-award-for-third-consecutive-year/"
     },
     {
-      "id": "20260706-012",
+      "id": "20260705-012",
       "rank": 12,
       "category": "industry",
       "source": "Direct Selling News",
@@ -654,7 +654,7 @@
       "url": "https://www.directsellingnews.com/2026/07/01/vorwerk-announces-integration-of-bimby-into-thermomix/"
     },
     {
-      "id": "20260706-013",
+      "id": "20260705-013",
       "rank": 13,
       "category": "industry",
       "source": "Direct Selling News",
@@ -708,7 +708,7 @@
       "url": "https://www.directsellingnews.com/2026/07/01/asea-impact-foundation-supports-the-choice-humanitarian/"
     },
     {
-      "id": "20260706-014",
+      "id": "20260705-014",
       "rank": 14,
       "category": "research",
       "source": "NutraIngredients-USA",
@@ -762,7 +762,7 @@
       "url": "https://www.nutraingredients.com/Article/2026/04/21/dietary-supplement-listing-bill-introduced-in-the-house/"
     },
     {
-      "id": "20260706-015",
+      "id": "20260705-015",
       "rank": 15,
       "category": "consumer",
       "source": "WHO",
@@ -816,7 +816,7 @@
       "url": "https://www.who.int/europe/news/item/24-06-2026-self-care-month-2026"
     },
     {
-      "id": "20260706-016",
+      "id": "20260705-016",
       "rank": 16,
       "category": "consumer",
       "source": "Harvard Health Publishing",
@@ -870,7 +870,7 @@
       "url": "https://www.health.harvard.edu/exercise-and-fitness/should-you-schedule-your-exercise-based-on-your-circadian-rhythm"
     },
     {
-      "id": "20260706-017",
+      "id": "20260705-017",
       "rank": 17,
       "category": "consumer",
       "source": "CDC",
@@ -924,7 +924,7 @@
       "url": "https://www.cdc.gov/healthy-weight-growth/physical-activity/index.html"
     },
     {
-      "id": "20260706-018",
+      "id": "20260705-018",
       "rank": 18,
       "category": "consumer",
       "source": "Mayo Clinic",
@@ -978,7 +978,7 @@
       "url": "https://www.mayoclinic.org/healthy-lifestyle/weight-loss/in-depth/mayo-clinic-diet/art-20045460"
     },
     {
-      "id": "20260706-019",
+      "id": "20260705-019",
       "rank": 19,
       "category": "consumer",
       "source": "Harvard Health Publishing",
@@ -1032,7 +1032,7 @@
       "url": "https://www.health.harvard.edu/newsletters/harvard_health_letter/2026/7"
     },
     {
-      "id": "20260706-020",
+      "id": "20260705-020",
       "rank": 20,
       "category": "consumer",
       "source": "CDC",
@@ -1086,6 +1086,5 @@
       "url": "https://www.cdc.gov/mental-health/living-with/index.html"
     }
   ],
-  "date": "2026-07-06",
-  "brief_title": "2026/07/06 大健康与直销行业每日简报"
+  "date": "2026-07-05"
 }

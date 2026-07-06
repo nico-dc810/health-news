@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360" role="img" aria-label="微信支付二维码占位图">
+  <rect width="360" height="360" fill="#f8fbff"/>
+  <rect x="24" y="24" width="312" height="312" rx="12" fill="#ffffff" stroke="#d6e2f2" stroke-width="4"/>
+  <g fill="#152033">
+    <rect x="54" y="54" width="78" height="78" rx="4"/>
+    <rect x="228" y="54" width="78" height="78" rx="4"/>
+    <rect x="54" y="228" width="78" height="78" rx="4"/>
+  </g>
+  <g fill="#ffffff">
+    <rect x="73" y="73" width="40" height="40" rx="3"/>
+    <rect x="247" y="73" width="40" height="40" rx="3"/>
+    <rect x="73" y="247" width="40" height="40" rx="3"/>
+  </g>
+  <g fill="#18b883">
+    <rect x="156" y="58" width="28" height="28"/>
+    <rect x="184" y="86" width="28" height="28"/>
+    <rect x="148" y="148" width="32" height="32"/>
+    <rect x="196" y="150" width="26" height="26"/>
+    <rect x="240" y="154" width="32" height="32"/>
+    <rect x="150" y="210" width="26" height="26"/>
+    <rect x="186" y="214" width="44" height="26"/>
+    <rect x="252" y="220" width="28" height="28"/>
+    <rect x="146" y="266" width="32" height="32"/>
+    <rect x="208" y="270" width="28" height="28"/>
+    <rect x="276" y="276" width="24" height="24"/>
+  </g>
+  <text x="180" y="337" text-anchor="middle" fill="#6b7486" font-family="Arial, sans-serif" font-size="16">微信支付占位二维码</text>
+</svg>

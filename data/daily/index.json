@@ -1,29 +1,171 @@
-﻿{
-  "updated_at": "2026-07-03T09:30:00+08:00",
+{
+  "updated_at": "2026-07-06T10:45:00+08:00",
   "items": [
+    {
+      "date": "2026-07-06",
+      "label": "2026/07/06",
+      "title": "2026/07/06 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-06.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "食品安全",
+        "抽检",
+        "市场监管",
+        "供应链",
+        "食品安全",
+        "检验方法",
+        "品控",
+        "合规",
+        "FDA",
+        "召回",
+        "膳食补充剂",
+        "跨境产品"
+      ]
+    },
+    {
+      "date": "2026-07-05",
+      "label": "2026/07/05",
+      "title": "2026/07/05",
+      "count": 20,
+      "path": "data/daily/2026-07-05.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "食品安全",
+        "抽检",
+        "市场监管",
+        "供应链",
+        "食品安全",
+        "检验方法",
+        "品控",
+        "合规",
+        "FDA",
+        "召回",
+        "膳食补充剂",
+        "跨境产品"
+      ]
+    },
+    {
+      "date": "2026-07-04",
+      "label": "2026/07/04",
+      "title": "2026/07/04",
+      "count": 20,
+      "path": "data/daily/2026-07-04.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "基因治疗",
+        "CDE",
+        "创新药",
+        "监管科学",
+        "细胞治疗",
+        "CAR-T",
+        "监管科学",
+        "抗衰边界",
+        "创新药",
+        "审评审批",
+        "细胞与基因治疗",
+        "NMPA"
+      ]
+    },
     {
       "date": "2026-07-03",
       "label": "2026/07/03",
       "title": "2026/07/03",
-      "path": "data/daily/2026-07-03.json",
       "count": 20,
-      "summary": "NMPA、FDA、DSN、Harvard、CDC、Mayo 每日简报"
+      "path": "data/daily/2026-07-03.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "国家药监局",
+        "医疗器械",
+        "脑机接口",
+        "健康科技",
+        "医疗器械分类",
+        "脑机接口",
+        "健康硬件",
+        "医疗器械命名",
+        "脑机接口",
+        "广告合规",
+        "广告合规",
+        "科研引用"
+      ]
     },
     {
       "date": "2026-07-02",
       "label": "2026/07/02",
       "title": "2026/07/02",
-      "path": "data/daily/2026-07-02.json",
       "count": 20,
-      "summary": "FTC、DSN、NutraIngredients、CDC、WHO、MedlinePlus 每日简报"
+      "path": "data/daily/2026-07-02.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FTC",
+        "直销合规",
+        "健康宣称",
+        "儿童健康",
+        "FTC",
+        "MLM",
+        "收益宣称",
+        "膳食补充剂",
+        "直销行业",
+        "协会",
+        "加拿大",
+        "行业声誉"
+      ]
     },
     {
       "date": "2026-07-01",
       "label": "2026/07/01",
       "title": "2026/07/01",
-      "path": "data/daily/2026-07-01.json",
       "count": 15,
-      "summary": "直销行业、产品监管与消费者健康素材归档"
+      "path": "data/daily/2026-07-01.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "media",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "营养健康",
+        "直销企业",
+        "科研合作",
+        "品牌",
+        "FitLine",
+        "国际直销",
+        "健康美容",
+        "财务重组",
+        "企业风险",
+        "保健食品",
+        "销售规范",
+        "国家标准"
+      ]
     }
   ]
 }
