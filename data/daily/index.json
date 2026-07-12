@@ -1,6 +1,35 @@
 {
-  "updated_at": "2026-07-11T10:30:00+08:00",
+  "updated_at": "2026-07-12T10:30:00+08:00",
   "items": [
+    {
+      "date": "2026-07-12",
+      "label": "2026/07/12",
+      "title": "2026/07/12 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-12.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "media",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "食品安全",
+        "冷冻水果",
+        "召回",
+        "E.coli",
+        "FTC",
+        "补充剂宣称",
+        "儿童健康",
+        "MLM合规",
+        "FTC",
+        "儿童营养",
+        "增高宣称",
+        "消费者评价"
+      ]
+    },
     {
       "date": "2026-07-11",
       "label": "2026/07/11",
