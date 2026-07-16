@@ -1,6 +1,33 @@
 {
-  "updated_at": "2026-07-15T10:30:00+08:00",
+  "updated_at": "2026-07-16T10:30:00+08:00",
   "items": [
+    {
+      "date": "2026-07-16",
+      "label": "2026/07/16",
+      "title": "2026/07/16 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-16.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product"
+      ],
+      "top_tags": [
+        "FDA",
+        "召回",
+        "FDA",
+        "产品安全",
+        "SAMR",
+        "保健食品",
+        "SAMR",
+        "食品安全",
+        "FDA",
+        "Enforcement Reports",
+        "FTC",
+        "健康宣称"
+      ]
+    },
     {
       "date": "2026-07-15",
       "label": "2026/07/15",
