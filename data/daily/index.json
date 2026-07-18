@@ -1,6 +1,34 @@
 {
-  "updated_at": "2026-07-17T10:30:00+08:00",
+  "updated_at": "2026-07-18T10:30:00+08:00",
   "items": [
+    {
+      "date": "2026-07-18",
+      "label": "2026/07/18",
+      "title": "2026/07/18 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-18.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FDA",
+        "医疗器械",
+        "FTC",
+        "体重管理",
+        "Herbalife",
+        "睡眠",
+        "CDC",
+        "运动",
+        "召回",
+        "花生过敏原",
+        "婴幼儿配方",
+        "食品添加剂"
+      ]
+    },
     {
       "date": "2026-07-17",
       "label": "2026/07/17",
