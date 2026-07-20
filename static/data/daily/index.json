@@ -1,0 +1,562 @@
+{
+  "updated_at": "2026-07-20T10:30:00+08:00",
+  "items": [
+    {
+      "date": "2026-07-20",
+      "label": "2026/07/20",
+      "title": "2026/07/20 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-20.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FDA",
+        "FTC",
+        "CDC",
+        "保健食品",
+        "直销合规",
+        "食品召回",
+        "Cyclospora",
+        "补充剂",
+        "睡眠",
+        "运动",
+        "蛋白质",
+        "中老年健康"
+      ]
+    },
+    {
+      "date": "2026-07-19",
+      "label": "2026/07/19",
+      "title": "2026/07/19 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-19.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FDA",
+        "CDC",
+        "FTC",
+        "召回",
+        "食品召回",
+        "消费者健康",
+        "过敏原",
+        "花生过敏原",
+        "儿童健康",
+        "食品添加剂",
+        "补充剂",
+        "监管风险"
+      ]
+    },
+    {
+      "date": "2026-07-18",
+      "label": "2026/07/18",
+      "title": "2026/07/18 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-18.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FDA",
+        "医疗器械",
+        "FTC",
+        "体重管理",
+        "Herbalife",
+        "睡眠",
+        "CDC",
+        "运动",
+        "召回",
+        "花生过敏原",
+        "婴幼儿配方",
+        "食品添加剂"
+      ]
+    },
+    {
+      "date": "2026-07-17",
+      "label": "2026/07/17",
+      "title": "2026/07/17 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-17.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "CDE",
+        "FDA",
+        "FTC",
+        "NMPA",
+        "SAMR",
+        "Direct Selling News",
+        "CDC",
+        "召回",
+        "Enforcement Reports",
+        "健康宣称",
+        "MLM",
+        "真实世界证据"
+      ]
+    },
+    {
+      "date": "2026-07-16",
+      "label": "2026/07/16",
+      "title": "2026/07/16 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-16.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product"
+      ],
+      "top_tags": [
+        "FDA",
+        "召回",
+        "FDA",
+        "产品安全",
+        "SAMR",
+        "保健食品",
+        "SAMR",
+        "食品安全",
+        "FDA",
+        "Enforcement Reports",
+        "FTC",
+        "健康宣称"
+      ]
+    },
+    {
+      "date": "2026-07-15",
+      "label": "2026/07/15",
+      "title": "2026/07/15 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-15.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FDA",
+        "召回",
+        "食品安全",
+        "标签合规",
+        "过敏原",
+        "食品标签",
+        "跨境食品",
+        "冷冻水果",
+        "E.coli",
+        "化妆品",
+        "头皮护理",
+        "微生物风险"
+      ]
+    },
+    {
+      "date": "2026-07-14",
+      "label": "2026/07/14",
+      "title": "2026/07/14 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-14.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FDA",
+        "过敏原",
+        "标签",
+        "FTC",
+        "合规",
+        "NMPA",
+        "基因治疗",
+        "DSA",
+        "WHO",
+        "食品召回",
+        "花生",
+        "轻食"
+      ]
+    },
+    {
+      "date": "2026-07-13",
+      "label": "2026/07/13",
+      "title": "2026/07/13 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-13.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product"
+      ],
+      "top_tags": [
+        "FDA",
+        "过敏原",
+        "食品标签",
+        "召回",
+        "冷冻水果",
+        "E.coli",
+        "食品安全",
+        "有机食品",
+        "辣木",
+        "Salmonella",
+        "膳食补充剂",
+        "供应链"
+      ]
+    },
+    {
+      "date": "2026-07-12",
+      "label": "2026/07/12",
+      "title": "2026/07/12 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-12.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "media",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "食品安全",
+        "冷冻水果",
+        "召回",
+        "E.coli",
+        "FTC",
+        "补充剂宣称",
+        "儿童健康",
+        "MLM合规",
+        "FTC",
+        "儿童营养",
+        "增高宣称",
+        "消费者评价"
+      ]
+    },
+    {
+      "date": "2026-07-11",
+      "label": "2026/07/11",
+      "title": "2026/07/11 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-11.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "NAMs",
+        "药物研发",
+        "监管科学",
+        "非动物方法",
+        "乙肝",
+        "临床试验",
+        "肝健康",
+        "药物研发",
+        "细胞治疗",
+        "免疫细胞",
+        "抗衰",
+        "监管边界"
+      ]
+    },
+    {
+      "date": "2026-07-10",
+      "label": "2026/07/10",
+      "title": "2026/07/10 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-10.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "NAMs",
+        "药物研发",
+        "监管科学",
+        "非动物方法",
+        "乙肝",
+        "临床试验",
+        "肝健康",
+        "细胞治疗",
+        "免疫细胞",
+        "监管边界",
+        "抗衰",
+        "基因治疗"
+      ]
+    },
+    {
+      "date": "2026-07-09",
+      "label": "2026/07/09",
+      "title": "2026/07/09 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-09.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "膳食补充剂",
+        "体重管理",
+        "功效宣称",
+        "FDA",
+        "FTC",
+        "营养饮食",
+        "睡眠",
+        "食品安全",
+        "抽检",
+        "市场监管",
+        "供应链风险",
+        "保健食品"
+      ]
+    },
+    {
+      "date": "2026-07-08",
+      "label": "2026/07/08",
+      "title": "2026/07/08 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-08.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "体重管理",
+        "膳食补充剂",
+        "运动",
+        "睡眠",
+        "食品安全",
+        "FTC",
+        "收入展示",
+        "GLP-1",
+        "营养",
+        "健身",
+        "保健食品",
+        "特殊食品"
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "label": "2026/07/07",
+      "title": "2026/07/07 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-07.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "食品安全",
+        "抽检",
+        "市场监管",
+        "供应链",
+        "食品安全",
+        "检验方法",
+        "品控",
+        "合规",
+        "FDA",
+        "召回",
+        "膳食补充剂",
+        "跨境产品"
+      ]
+    },
+    {
+      "date": "2026-07-06",
+      "label": "2026/07/06",
+      "title": "2026/07/06 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-06.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "食品安全",
+        "抽检",
+        "市场监管",
+        "供应链",
+        "食品安全",
+        "检验方法",
+        "品控",
+        "合规",
+        "FDA",
+        "召回",
+        "膳食补充剂",
+        "跨境产品"
+      ]
+    },
+    {
+      "date": "2026-07-05",
+      "label": "2026/07/05",
+      "title": "2026/07/05",
+      "count": 20,
+      "path": "data/daily/2026-07-05.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "食品安全",
+        "抽检",
+        "市场监管",
+        "供应链",
+        "食品安全",
+        "检验方法",
+        "品控",
+        "合规",
+        "FDA",
+        "召回",
+        "膳食补充剂",
+        "跨境产品"
+      ]
+    },
+    {
+      "date": "2026-07-04",
+      "label": "2026/07/04",
+      "title": "2026/07/04",
+      "count": 20,
+      "path": "data/daily/2026-07-04.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "基因干预",
+        "CDE",
+        "创新药",
+        "监管科学",
+        "细胞干预",
+        "CAR-T",
+        "监管科学",
+        "抗衰边界",
+        "创新药",
+        "审评审批",
+        "细胞与基因干预",
+        "NMPA"
+      ]
+    },
+    {
+      "date": "2026-07-03",
+      "label": "2026/07/03",
+      "title": "2026/07/03",
+      "count": 20,
+      "path": "data/daily/2026-07-03.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "国家药监局",
+        "医疗器械",
+        "脑机接口",
+        "健康科技",
+        "医疗器械分类",
+        "脑机接口",
+        "健康硬件",
+        "医疗器械命名",
+        "脑机接口",
+        "广告合规",
+        "广告合规",
+        "科研引用"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "label": "2026/07/02",
+      "title": "2026/07/02",
+      "count": 20,
+      "path": "data/daily/2026-07-02.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FTC",
+        "直销合规",
+        "健康宣称",
+        "儿童健康",
+        "FTC",
+        "MLM",
+        "收益宣称",
+        "膳食补充剂",
+        "直销行业",
+        "协会",
+        "加拿大",
+        "行业声誉"
+      ]
+    },
+    {
+      "date": "2026-07-01",
+      "label": "2026/07/01",
+      "title": "2026/07/01",
+      "count": 15,
+      "path": "data/daily/2026-07-01.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "media",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "营养健康",
+        "直销企业",
+        "科研合作",
+        "品牌",
+        "FitLine",
+        "国际直销",
+        "健康美容",
+        "财务重组",
+        "企业风险",
+        "保健食品",
+        "销售规范",
+        "国家标准"
+      ]
+    }
+  ]
+}
