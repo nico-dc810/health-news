@@ -39,3 +39,10 @@
 - FTC 是否继续发布儿童健康、补充剂评价背书、MLM 收入陈述或健康宣称案件。
 - Direct Selling News 与企业 IR 是否出现 7 月下旬财报、渠道调整和健康生活方式赞助新动态。
 - SAMR/NMPA/CDE 是否出现可追溯到具体页面的保健食品、化妆品、医疗器械或药审公告。
+
+## 发布后核验补充
+
+- gh-pages 已推送到远端提交 `b7cd651`，`git ls-remote` 确认远端 `refs/heads/gh-pages` 指向该提交。
+- `raw.githubusercontent.com` 已核验 `data/latest.json`、`data/daily/2026-07-20.json`、`data/daily/index.json`：日期为 2026-07-20，条数为 20，中文可读，问号数为 0。
+- `https://nico-dc810.github.io/health-news/` Pages CDN 在复查时仍返回 2026-07-19 或出现 SSL EOF，本次记录为 Pages/CDN 传播待刷新；远端分支内容已确认正确。
+- `https://ai.candobear.com/data/latest.json` 当前返回 SPA HTML，不适合作为 JSON 校验地址，后续应确认自定义域静态资源路由。
