@@ -1,6 +1,62 @@
 {
-  "updated_at": "2026-07-20T10:30:00+08:00",
+  "updated_at": "2026-07-22T10:30:00+08:00",
   "items": [
+    {
+      "date": "2026-07-22",
+      "label": "2026/07/22",
+      "title": "2026/07/22 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-22.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FDA",
+        "CDE",
+        "WHO",
+        "儿童食品",
+        "膳食补充剂",
+        "Cyclospora",
+        "婴配粉",
+        "FTC",
+        "儿童健康",
+        "生物制品",
+        "真实世界证据",
+        "SOFI"
+      ]
+    },
+    {
+      "date": "2026-07-21",
+      "label": "2026/07/21",
+      "title": "2026/07/21 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-21.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FDA",
+        "FTC",
+        "CDC",
+        "食品安全",
+        "过敏原",
+        "儿童健康",
+        "食品添加剂",
+        "咖啡因",
+        "MLM",
+        "Medifast",
+        "Trilivy",
+        "Xyngular"
+      ]
+    },
     {
       "date": "2026-07-20",
       "label": "2026/07/20",
