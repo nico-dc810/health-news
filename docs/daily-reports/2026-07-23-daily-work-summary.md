@@ -33,4 +33,6 @@
 
 - 已生成 `static/data/latest.json`、`static/data/daily/2026-07-23.json`、`static/data/daily/index.json`。
 - 已运行 JSON 解析、SOP 质量门禁和中文可读性检查。
+- 发布记录：`main` 已推送提交 `fb60554`，但 GitHub Actions run `29972887415` 被 `github-pages` 环境保护规则拒绝；随后已推送 `gh-pages` 提交 `c1b10a1`，远端 `refs/heads/gh-pages` 已确认指向该提交。
+- 线上验收异常：本机请求 GitHub Pages 默认域名时连接被远端重置；`https://ai.candobear.com/` 当前返回“做中学 · AI”站点页面，不是本仓库健康资讯站点。数据发布已到远端分支，但 live URL 需要确认 Pages 域名或环境保护规则。
 - 明日关注：FDA 辣木原料链召回是否继续扩展、Cyclospora 生菜调查更新、FTC 健康宣称退款/最终命令后续、CDE 关爱计划延伸项目公示状态、NMPA 医疗器械注册明细。
