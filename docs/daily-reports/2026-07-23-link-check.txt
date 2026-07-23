@@ -1,0 +1,20 @@
+1	CDE	202	https://www.cde.org.cn/main/news/listpage/9f9c74c73e0f8f56a8bfbc646055026d
+2	FTC	200	https://www.ftc.gov/news-events/news/press-releases/2026/07/ftc-returns-money-consumers-harmed-trend-deploys-deceptive-marketing
+3	FDA	ERR	HTTP Error 404: Not Found
+4	FDA	ERR	HTTP Error 404: Not Found
+5	FDA	ERR	HTTP Error 404: Not Found
+6	FTC	200	https://www.ftc.gov/about-ftc/bureaus-offices/office-public-affairs
+7	SAMR	200	https://www.samr.gov.cn/
+8	CDE	202	https://www.cde.org.cn/main/news/listpage/9f9c74c73e0f8f56a8bfbc646055026d
+9	CDE	202	https://www.cde.org.cn/main/news/listpage/9f9c74c73e0f8f56a8bfbc646055026d
+10	NMPA	ERR	HTTP Error 412: Precondition Failed
+11	WHO	200	https://www.who.int/publications/i/item/9789241550543
+12	CDC	ERR	HTTP Error 403: Forbidden
+13	NIH ODS	ERR	HTTP Error 403: Forbidden
+14	PubMed	ERR	HTTP Error 403: Forbidden
+15	PubMed	ERR	HTTP Error 403: Forbidden
+16	PubMed	ERR	HTTP Error 403: Forbidden
+17	Direct Selling News	ERR	HTTP Error 403: Forbidden
+18	Direct Selling News	ERR	HTTP Error 403: Forbidden
+19	Direct Selling News	ERR	HTTP Error 403: Forbidden
+20	Direct Selling News	ERR	HTTP Error 403: Forbidden

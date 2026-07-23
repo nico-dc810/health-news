@@ -1,6 +1,34 @@
 {
-  "updated_at": "2026-07-22T10:30:00+08:00",
+  "updated_at": "2026-07-23T10:30:00+08:00",
   "items": [
+    {
+      "date": "2026-07-23",
+      "label": "2026/07/23",
+      "title": "2026/07/23 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-23.json",
+      "categories": [
+        "consumer",
+        "industry",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "CDE",
+        "FDA",
+        "FTC",
+        "健康宣称",
+        "广告合规",
+        "健康老龄化",
+        "睡眠",
+        "补充剂",
+        "PubMed",
+        "创新药",
+        "关爱计划",
+        "患者可及性"
+      ]
+    },
     {
       "date": "2026-07-22",
       "label": "2026/07/22",
