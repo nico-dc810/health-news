@@ -1,0 +1,20 @@
+01	ERR	https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts	HTTPError: HTTP Error 404: Not Found
+02	200	https://www.ftc.gov/news-events/news/press-releases	https://www.ftc.gov/news-events/news/press-releases
+03	200	https://www.samr.gov.cn/	https://www.samr.gov.cn/
+04	200	https://www.cde.org.cn/	https://www.cde.org.cn/
+05	ERR	https://www.nmpa.gov.cn/	HTTPError: HTTP Error 412: Precondition Failed
+06	ERR	https://www.fda.gov/food/outbreaks-foodborne-illness/investigation-5-state-outbreak-cyclospora-illnesses-iceberg-lettuce-july-2026	HTTPError: HTTP Error 404: Not Found
+07	ERR	https://www.directsellingnews.com/2026/07/22/usana-renews-partnership-with-nordiq-canada/	HTTPError: HTTP Error 403: Forbidden
+08	ERR	https://www.directsellingnews.com/2026/07/20/medifast-transitions-from-optavia-to-metabolic-health-system-trilivy/	HTTPError: HTTP Error 403: Forbidden
+09	200	https://www.nutraingredients.com/	https://www.nutraingredients.com/
+10	ERR	https://pubmed.ncbi.nlm.nih.gov/?term=gut+microbiome+dietary+fiber+systematic+review+2026	HTTPError: HTTP Error 403: Forbidden
+11	ERR	https://www.cdc.gov/physical-activity-basics/benefits/index.html	HTTPError: HTTP Error 403: Forbidden
+12	ERR	https://www.cdc.gov/sleep/about/index.html	HTTPError: HTTP Error 403: Forbidden
+13	200	https://www.who.int/news-room/fact-sheets/detail/healthy-diet	https://www.who.int/news-room/fact-sheets/detail/healthy-diet
+14	ERR	https://ods.od.nih.gov/factsheets/Magnesium-Consumer/	HTTPError: HTTP Error 403: Forbidden
+15	ERR	https://www.mayoclinic.org/healthy-lifestyle/weight-loss/in-depth/weight-loss/art-20047752	HTTPError: HTTP Error 403: Forbidden
+16	ERR	https://pubmed.ncbi.nlm.nih.gov/?term=resistance+training+older+adults+systematic+review+2026	HTTPError: HTTP Error 403: Forbidden
+17	ERR	https://pubmed.ncbi.nlm.nih.gov/?term=perimenopause+women+health+systematic+review+2026	HTTPError: HTTP Error 403: Forbidden
+18	200	https://www.health.harvard.edu/	https://www.health.harvard.edu/
+19	ERR	https://pubmed.ncbi.nlm.nih.gov/	HTTPError: HTTP Error 403: Forbidden
+20	ERR	https://www.directsellingnews.com/2026/07/17/xyngular-named-finalist-for-product-of-the-year/	HTTPError: HTTP Error 403: Forbidden

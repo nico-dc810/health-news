@@ -1,6 +1,36 @@
 {
-  "updated_at": "2026-07-23T10:30:00+08:00",
+  "updated_at": "2026-07-24T10:30:00+08:00",
   "items": [
+    {
+      "date": "2026-07-24",
+      "label": "2026/07/24",
+      "title": "2026/07/24 大健康与直销行业每日简报",
+      "count": 20,
+      "path": "data/daily/2026-07-24.json",
+      "categories": [
+        "community",
+        "consumer",
+        "industry",
+        "media",
+        "policy",
+        "product",
+        "research"
+      ],
+      "top_tags": [
+        "FDA",
+        "CDC",
+        "PubMed",
+        "Direct Selling News",
+        "FTC",
+        "SAMR",
+        "NMPA",
+        "CDE",
+        "膳食补充剂",
+        "运动",
+        "睡眠",
+        "体重管理"
+      ]
+    },
     {
       "date": "2026-07-23",
       "label": "2026/07/23",
