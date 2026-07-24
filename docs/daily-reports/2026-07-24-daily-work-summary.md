@@ -32,5 +32,7 @@
 ## 链接检查和质量检查
 
 - 已生成 `static/data/latest.json`、`static/data/daily/2026-07-24.json`、`static/data/daily/index.json`。
-- 待执行：JSON 解析、SOP 质量门禁、中文可读性检查、链接可访问性抽检和 gh-pages 发布。
+- JSON 解析通过；SOP 质量门禁结果为 20 final、0 rejected、0 filtered；中文可读性检查通过，未发现替换字符或异常问号比例。
+- 链接抽检已生成 `docs/daily-reports/2026-07-24-link-check.txt`。FTC、SAMR、CDE、NutraIngredients、WHO、Harvard Health 本地返回 200；NMPA 返回 412；CDC、NIH ODS、PubMed、Mayo Clinic、Direct Selling News 返回 403；FDA 路径本地返回 404，已记录为需明日复核的官方站点路径问题。
+- 发布记录：`gh-pages` 已推送提交 `daba29a`。GitHub Pages 默认域名本机请求仍连接重置；改用 GitHub raw 的 `gh-pages` 分支文件验收，`data/latest.json`、`data/daily/2026-07-24.json`、`data/daily/index.json` 均确认日期为 2026-07-24、条数为 20、中文可读。
 - 明日关注：FDA 召回扩展、FTC 健康广告退款后续、CDE/NMPA 注册与公示更新、体重管理服务在 GLP-1 语境下的合规话术。
